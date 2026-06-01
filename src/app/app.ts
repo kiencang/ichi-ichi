@@ -16,6 +16,9 @@ export class App implements OnDestroy, OnInit {
   countdownValue = signal(3);
   recordingTime = signal(0);
   errorMessage = signal('');
+  showSuccessToast = signal(false);
+  successMessage = signal('');
+  audioLevels = signal<number[]>([15, 15, 15, 15, 15, 15, 15, 15, 15, 15]);
   timerInterval: ReturnType<typeof setInterval> | null = null;
   countdownTimerInterval: ReturnType<typeof setInterval> | null = null;
   
@@ -28,6 +31,8 @@ export class App implements OnDestroy, OnInit {
   private displayStream: MediaStream | null = null;
   private micStream: MediaStream | null = null;
   private audioCtx: AudioContext | null = null;
+  private analyserNode: AnalyserNode | null = null;
+  private animationFrameId: number | null = null;
 
   async ngOnInit() {
       if (typeof navigator !== 'undefined' && navigator.mediaDevices) {
@@ -100,7 +105,7 @@ export class App implements OnDestroy, OnInit {
       this.displayStream = await navigator.mediaDevices.getDisplayMedia({
         video: { 
           displaySurface: 'monitor',
-          frameRate: { ideal: 30, max: 30 }
+          frameRate: { ideal: 60, max: 60 }
         } as MediaTrackConstraints, 
         audio: true
       });
@@ -123,6 +128,8 @@ export class App implements OnDestroy, OnInit {
       // 3. Tiến hành gộp (Mix) các luồng âm thanh bằng Web Audio API
       this.audioCtx = new AudioContext();
       const dest = this.audioCtx.createMediaStreamDestination();
+      this.analyserNode = this.audioCtx.createAnalyser();
+      this.analyserNode.fftSize = 32;
 
       let hasAudio = false;
 
@@ -130,6 +137,7 @@ export class App implements OnDestroy, OnInit {
       if (this.displayStream.getAudioTracks().length > 0) {
         const displayAudioSource = this.audioCtx.createMediaStreamSource(new MediaStream([this.displayStream.getAudioTracks()[0]]));
         displayAudioSource.connect(dest);
+        displayAudioSource.connect(this.analyserNode);
         hasAudio = true;
       }
 
@@ -137,6 +145,7 @@ export class App implements OnDestroy, OnInit {
       if (this.micStream && this.micStream.getAudioTracks().length > 0) {
         const micAudioSource = this.audioCtx.createMediaStreamSource(this.micStream);
         micAudioSource.connect(dest);
+        micAudioSource.connect(this.analyserNode);
         hasAudio = true;
       }
 
@@ -168,7 +177,7 @@ export class App implements OnDestroy, OnInit {
       ];
       
       const mimeType = types.find(type => MediaRecorder.isTypeSupported(type)) || '';
-      const options = mimeType ? { mimeType, videoBitsPerSecond: 5000000, audioBitsPerSecond: 192000 } : { videoBitsPerSecond: 5000000, audioBitsPerSecond: 192000 };
+      const options = mimeType ? { mimeType, videoBitsPerSecond: 8000000, audioBitsPerSecond: 192000 } : { videoBitsPerSecond: 8000000, audioBitsPerSecond: 192000 };
       
       this.mediaRecorder = new MediaRecorder(this.combinedStream, options);
 
@@ -206,6 +215,10 @@ export class App implements OnDestroy, OnInit {
               this.timerInterval = setInterval(() => {
                   this.recordingTime.update(t => t + 1);
               }, 1000);
+
+              if (hasAudio && this.analyserNode) {
+                  this.updateAudioLevels();
+              }
           }
       }, 1000);
 
@@ -214,6 +227,30 @@ export class App implements OnDestroy, OnInit {
       setTimeout(() => this.errorMessage.set(''), 8000);
       this.cleanupStreams();
     }
+  }
+
+  updateAudioLevels = () => {
+      if (!this.isRecording() || !this.analyserNode) {
+          this.audioLevels.set([15, 15, 15, 15, 15, 15, 15, 15, 15, 15]);
+          return;
+      }
+      const dataArray = new Uint8Array(this.analyserNode.frequencyBinCount);
+      this.analyserNode.getByteFrequencyData(dataArray);
+      
+      const levels = [
+          Math.max(15, (dataArray[0] / 255) * 100),
+          Math.max(15, (dataArray[1] / 255) * 100),
+          Math.max(15, (dataArray[2] / 255) * 100),
+          Math.max(15, (dataArray[3] / 255) * 100),
+          Math.max(15, (dataArray[4] / 255) * 100),
+          Math.max(15, (dataArray[5] / 255) * 100),
+          Math.max(15, (dataArray[6] / 255) * 100),
+          Math.max(15, (dataArray[7] / 255) * 100),
+          Math.max(15, (dataArray[8] / 255) * 100),
+          Math.max(15, (dataArray[9] / 255) * 100)
+      ];
+      this.audioLevels.set(levels);
+      this.animationFrameId = requestAnimationFrame(this.updateAudioLevels);
   }
 
   stopRecording() {
@@ -257,11 +294,20 @@ export class App implements OnDestroy, OnInit {
       setTimeout(() => {
           window.URL.revokeObjectURL(url);
           document.body.removeChild(a);
+          this.showSuccessToast.set(true);
+          this.successMessage.set('Đã lưu video về máy!');
+          setTimeout(() => this.showSuccessToast.set(false), 5000);
       }, 100);
       this.recordedChunks = [];
   }
 
   private cleanupStreams() {
+      if (this.animationFrameId !== null) {
+          cancelAnimationFrame(this.animationFrameId);
+          this.animationFrameId = null;
+      }
+      this.audioLevels.set([15, 15, 15, 15, 15, 15, 15, 15, 15, 15]);
+
       if (this.displayStream) {
           this.displayStream.getTracks().forEach(t => t.stop());
           this.displayStream = null;

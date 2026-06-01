@@ -8,6 +8,17 @@
     </div>
   }
 
+  @if (showSuccessToast()) {
+    <div class="absolute top-16 w-full max-w-md px-4 z-50">
+      <div class="bg-emerald-950/80 border border-emerald-500/30 text-emerald-200 px-4 py-3 rounded-xl text-sm flex items-center justify-center space-x-2 shadow-2xl backdrop-blur-md">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+           <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 11.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
+        </svg>
+        <span>{{ successMessage() }}</span>
+      </div>
+    </div>
+  }
+
   @if (isCountingDown()) {
     <div class="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A]/80 backdrop-blur-sm transition-all pointer-events-auto">
        <div class="select-none flex flex-col items-center">
@@ -63,11 +74,21 @@
     </button>
 
     <!-- Status text & Time -->
-    <div class="mt-14 text-center h-12 flex flex-col items-center justify-start">
+    <div class="mt-14 text-center h-20 flex flex-col items-center justify-start">
       @if (isRecording()) {
         <div class="flex items-center space-x-3 text-[#FDA4AF] font-mono text-3xl tracking-wider font-light drop-shadow-[0_0_12px_rgba(225,29,72,0.5)] select-none">
            <span class="w-2.5 h-2.5 bg-[#E11D48] rounded-full animate-pulse shadow-[0_0_8px_rgba(225,29,72,0.9)] mt-1"></span>
            <span>{{ formattedTime() }}</span>
+        </div>
+        
+        <!-- Audio Equalizer Bars -->
+        <div class="flex items-end justify-center space-x-1.5 mt-4 h-6">
+           @for (level of audioLevels(); track $index) {
+              <div 
+                class="w-1.5 bg-[#E11D48] rounded-t-sm transition-all duration-75 ease-out shadow-[0_0_8px_rgba(225,29,72,0.4)]"
+                [style.height]="level + '%'"
+              ></div>
+           }
         </div>
       } @else {
          <div class="flex flex-col items-center space-y-2 pointer-events-none select-none">
@@ -90,7 +111,7 @@
   <!-- Footer -->
   <footer class="absolute bottom-6 text-center w-full">
     <p class="text-[10px] text-slate-500/70 font-light tracking-widest uppercase">
-      v1.0.4 &bull; GitHub &bull; Nguyễn Đức Anh &bull; contact@wpsila.com &bull; Hướng dẫn sử dụng
+      v1.0.5 &bull; GitHub &bull; Nguyễn Đức Anh &bull; contact@wpsila.com &bull; Hướng dẫn sử dụng
     </p>
   </footer>
 </main>

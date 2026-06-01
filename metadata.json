@@ -1,6 +1,11 @@
 {
   "name": "ALQ-DLL",
-  "description": "Ứng dụng quay màn hình tối giản giúp tối ưu hóa trải nghiệm người dùng (UX), hỗ trợ thu âm thanh từ micro và hệ thống",
-  "requestFramePermissions": ["microphone", "display-capture"],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "description": "Ứng dụng quay màn hình tối giản giúp tối ưu hóa trải nghiệm người dùng (UX), hỗ trợ thu âm thanh từ micro và hệ thống.",
+  "requestFramePermissions": [
+    "microphone",
+    "display-capture"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }
