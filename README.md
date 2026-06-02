@@ -1,6 +1,6 @@
 # ALQ-DLL
 Trình quay màn hình đơn giản, tiện lợi. Một số chức năng nổi bật:
-- Thích hợp nhất để tạo video hướng dẫn ngắn hoặc mô tả trực quan điều gì đó trên máy tính của bạn;
+- Thích hợp nhất để tạo video hướng dẫn ngắn hoặc mô tả trực quan điều gì đó trên máy tính của bạn để gửi ngay cho người khác, không cần biên tập hậu kỳ phức tạp;
 - Dùng luôn qua trình duyệt, không phải cài thêm phần mềm nào;
 - Ghi toàn màn hình và âm thanh mic (bạn nói), cũng như âm thanh hệ thống (ví dụ âm thanh từ game bạn chơi). Việc có ghi thêm âm thanh hay không là tùy chọn;
 - Dữ liệu xử lý hoàn toàn phía máy khách (clientside), không gửi dữ liệu ra server bên ngoài;
