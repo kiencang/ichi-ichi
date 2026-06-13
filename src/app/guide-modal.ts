@@ -46,14 +46,22 @@ import { ChangeDetectionStrategy, Component, model } from '@angular/core';
               <div class="space-y-4">
                 <div class="flex items-center gap-3">
                   <span class="flex items-center justify-center w-7 h-7 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-sm font-semibold">1</span>
-                  <h3 class="text-slate-300 font-medium text-base">Cấp quyền Chia sẻ màn hình</h3>
+                  <h3 class="text-slate-300 font-medium text-base">Cấp quyền Thu âm thanh (Micro) & Webcam</h3>
                 </div>
                 <p class="text-sm text-slate-400 pl-10 leading-relaxed">
-                  Khi bạn bấm nút bắt đầu quay, trình duyệt web sẽ yêu cầu bạn cấp quyền truy cập. Hãy chọn nội dung bạn muốn chia sẻ (toàn bộ màn hình, hoặc một cửa sổ) và bấm nút <strong>Chia sẻ (Share)</strong>. Ở bước này, bạn cũng có thể bật tính năng chia sẻ âm thanh hệ thống trên hộp thoại để ghi được âm thanh phát ra từ máy tính.
+                  Để ứng dụng có thể thu được tiếng từ micro hoặc/và video của bạn (nếu cần), vui lòng <strong>Cho phép (Allow)</strong> trình duyệt sử dụng micro, webcam khi được yêu cầu.
                 </p>
                 <div class="pl-10">
                   <div class="rounded-xl overflow-hidden border border-slate-700/50 bg-slate-800/30">
-                    <img src="cap-quyen-1.png" alt="Hướng dẫn cấp quyền chia sẻ màn hình" class="w-full h-auto" referrerpolicy="no-referrer" />
+                    <img src="cap-quyen-2.png" alt="Hướng dẫn cấp quyền micro" class="w-full h-auto" referrerpolicy="no-referrer" />
+                  </div>
+                </div>
+                <p class="text-sm text-slate-400 pl-10 leading-relaxed">
+                  Nếu lỡ tay bấm chặn, bạn có thể bấm biểu tượng Cài đặt trên thanh địa chỉ của trình duyệt, rồi click biểu tượng Micro (hoặc/và Video) có thanh gạch chéo để cấp quyền lại.
+                </p>
+                <div class="pl-10">
+                  <div class="rounded-xl overflow-hidden border border-slate-700/50 bg-slate-800/30">
+                    <img src="cap-quyen-3.png" alt="Hướng dẫn cấp lại quyền khi bị chặn" class="w-full h-auto" referrerpolicy="no-referrer" />
                   </div>
                 </div>
               </div>
@@ -64,14 +72,14 @@ import { ChangeDetectionStrategy, Component, model } from '@angular/core';
               <div class="space-y-4">
                 <div class="flex items-center gap-3">
                   <span class="flex items-center justify-center w-7 h-7 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-sm font-semibold">2</span>
-                  <h3 class="text-slate-300 font-medium text-base">Cấp quyền Thu âm thanh (Micro)</h3>
+                  <h3 class="text-slate-300 font-medium text-base">Cấp quyền Chia sẻ màn hình</h3>
                 </div>
                 <p class="text-sm text-slate-400 pl-10 leading-relaxed">
-                  Để ứng dụng có thể thu được tiếng từ micro của bạn (nếu cần), vui lòng <strong>Cho phép (Allow)</strong> trình duyệt sử dụng micro khi được yêu cầu. Nếu lỡ tay bấm chặn, bạn có thể bấm vào biểu tượng Micro có thanh gạch chéo hoặc Cài đặt trên thanh địa chỉ của trình duyệt để cấp quyền lại.
+                  Khi bạn bấm nút bắt đầu quay, trình duyệt web sẽ yêu cầu bạn cấp quyền truy cập. Hãy chọn nội dung bạn muốn chia sẻ (toàn bộ màn hình, hoặc một cửa sổ) và bấm nút <strong>Chia sẻ (Share)</strong>. Ở bước này, bạn cũng có thể bật tính năng chia sẻ âm thanh hệ thống trên hộp thoại để ghi được âm thanh phát ra từ máy tính.
                 </p>
                 <div class="pl-10">
                   <div class="rounded-xl overflow-hidden border border-slate-700/50 bg-slate-800/30">
-                    <img src="cap-quyen-2.png" alt="Hướng dẫn cấp quyền micro" class="w-full h-auto" referrerpolicy="no-referrer" />
+                    <img src="cap-quyen-1.png" alt="Hướng dẫn cấp quyền chia sẻ màn hình" class="w-full h-auto" referrerpolicy="no-referrer" />
                   </div>
                 </div>
               </div>
@@ -98,7 +106,7 @@ import { ChangeDetectionStrategy, Component, model } from '@angular/core';
                   <h3 class="text-slate-300 font-medium text-base">Vị trí lưu video</h3>
                 </div>
                 <p class="text-sm text-slate-400 pl-10 leading-relaxed">
-                  Sau khi bạn bấm dừng ghi hình, video sẽ được tự động xử lý và tải về máy tính (quá trình này hoàn toàn offline). Theo mặc định, video sẽ nằm trong <strong>thư mục Downloads (Tải xuống)</strong> của máy tính với tên dạng <code>ScreenRecording-Nam-Thang-Ngay-Gio.webm</code>. Bạn có thể mở mục "Nội dung tải xuống" (Downloads) trên trình duyệt để mở video.
+                  Sau khi bạn bấm dừng ghi hình, video sẽ được tự động xử lý và tải về máy tính (quá trình này hoàn toàn offline). Theo mặc định, video sẽ nằm trong <strong>thư mục Downloads (Tải xuống)</strong> của máy tính với tên dạng <code>[Ichi_Ichi_SR]_[Ngay_Thang_Nam]_[Gio_Phut_Giay].webm</code>. Bạn có thể mở mục "Nội dung tải xuống" (Downloads) trên trình duyệt để mở video.
                 </p>
               </div>
             </div>
