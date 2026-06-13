@@ -57,7 +57,7 @@ import { ChangeDetectionStrategy, Component, model } from '@angular/core';
                   </div>
                 </div>
                 <p class="text-sm text-slate-400 pl-10 leading-relaxed">
-                  Nếu lỡ tay bấm chặn, bạn có thể bấm biểu tượng Cài đặt trên thanh địa chỉ của trình duyệt, rồi click biểu tượng Micro (hoặc/và Video) có thanh gạch chéo để cấp quyền lại.
+                  Nếu lỡ tay bấm chặn (Không bao giờ cho phép), bạn có thể bấm biểu tượng Cài đặt trên thanh địa chỉ của trình duyệt, rồi click tiếp biểu tượng Micro (hoặc/và Camera) có thanh gạch chéo để cấp quyền lại.
                 </p>
                 <div class="pl-10">
                   <div class="rounded-xl overflow-hidden border border-slate-700/50 bg-slate-800/30">
