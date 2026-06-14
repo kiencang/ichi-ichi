@@ -90,9 +90,20 @@ export class App implements OnDestroy, OnInit {
   }
 
   saveSettings() {
-      this.qualityPreset.set(this.tempQualityPreset());
-      this.cameraSize.set(this.tempCameraSize());
-      this.uiMode.set(this.tempUiMode());
+      const newQuality = this.tempQualityPreset();
+      const newSize = this.tempCameraSize();
+      const newMode = this.tempUiMode();
+
+      this.qualityPreset.set(newQuality);
+      this.cameraSize.set(newSize);
+      this.uiMode.set(newMode);
+
+      if (typeof window !== 'undefined') {
+          localStorage.setItem('ichi_qualityPreset', newQuality);
+          localStorage.setItem('ichi_cameraSize', newSize.toString());
+          localStorage.setItem('ichi_uiMode', newMode);
+      }
+
       this.showSettingsModal.set(false);
       this.successMessage.set('Đã lưu cài đặt thành công!');
       this.showSuccessToast.set(true);
@@ -121,6 +132,22 @@ export class App implements OnDestroy, OnInit {
       if (typeof window !== 'undefined') {
           this.updateCachedWindowSize();
           this.cameraPos.set({ x: 20, y: this.cachedWindowHeight - 200 }); // default pos
+
+          // Load saved settings from localStorage
+          const storedQuality = localStorage.getItem('ichi_qualityPreset') as 'high' | 'medium' | 'low';
+          if (storedQuality && ['high', 'medium', 'low'].includes(storedQuality)) {
+              this.qualityPreset.set(storedQuality);
+          }
+  
+          const storedSize = localStorage.getItem('ichi_cameraSize');
+          if (storedSize && !isNaN(Number(storedSize))) {
+              this.cameraSize.set(Number(storedSize));
+          }
+  
+          const storedMode = localStorage.getItem('ichi_uiMode') as 'default' | 'enhanced';
+          if (storedMode && ['default', 'enhanced'].includes(storedMode)) {
+              this.uiMode.set(storedMode);
+          }
       }
       await this.deviceDetector.initPermissions();
   }
