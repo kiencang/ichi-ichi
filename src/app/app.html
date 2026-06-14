@@ -1,4 +1,6 @@
 <main class="min-h-screen bg-[#070b14] relative flex flex-col items-center justify-center p-4 selection:bg-red-500/30 font-sans overflow-hidden">
+  <!-- Tailwind compilation safety list for dynamically bound classes: -->
+  <!-- px-3 py-1.5 py-2.5 px-10 py-4 text-[13px] text-[10px] text-[180px] text-[70px] sm:text-[100px] md:text-[140px] -->
   
   <!-- Cinematic Film Grain & Vignette Overlay -->
   <div class="pointer-events-none absolute inset-0 z-0 select-none">
@@ -20,9 +22,23 @@
   }
 
   @if (showSuccessToast()) {
-    <div class="absolute top-16 w-full max-w-md px-4 z-50">
-      <div class="bg-emerald-950/80 border border-emerald-500/30 text-emerald-200 px-4 py-3 rounded-xl text-sm flex items-center justify-center space-x-2 shadow-2xl backdrop-blur-md">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+    <div class="absolute top-16 w-full max-w-md px-4 z-[60]">
+      <div class="px-4 py-3 flex items-center justify-center space-x-2 shadow-2xl backdrop-blur-md"
+        [class.bg-emerald-950/80]="uiMode() !== 'enhanced'"
+        [class.border]="uiMode() !== 'enhanced'"
+        [class.border-emerald-500/30]="uiMode() !== 'enhanced'"
+        [class.text-emerald-200]="uiMode() !== 'enhanced'"
+        [class.rounded-xl]="uiMode() !== 'enhanced'"
+        [class.text-sm]="uiMode() !== 'enhanced'"
+        [class.bg-amber-950/90]="uiMode() === 'enhanced'"
+        [class.border-2]="uiMode() === 'enhanced'"
+        [class.border-amber-500/50]="uiMode() === 'enhanced'"
+        [class.text-amber-200]="uiMode() === 'enhanced'"
+        [class.rounded-2xl]="uiMode() === 'enhanced'"
+        [class.text-base]="uiMode() === 'enhanced'"
+        [class.font-medium]="uiMode() === 'enhanced'"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" [class.w-5]="uiMode() !== 'enhanced'" [class.h-5]="uiMode() !== 'enhanced'" [class.w-6]="uiMode() === 'enhanced'" [class.h-6]="uiMode() === 'enhanced'">
            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 11.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
         </svg>
         <span>{{ successMessage() }}</span>
@@ -34,8 +50,12 @@
     <div class="fixed inset-0 z-[110] flex items-center justify-center bg-[#070b14]/80 backdrop-blur-sm transition-all pointer-events-auto">
        <div class="select-none flex flex-col items-center">
             <span [class.text-[180px]]="countdownValue() !== 'ACTION!'" [class.text-[70px]]="countdownValue() === 'ACTION!'" [class.sm:text-[100px]]="countdownValue() === 'ACTION!'" [class.md:text-[140px]]="countdownValue() === 'ACTION!'" class="font-mono font-bold text-white leading-none drop-shadow-2xl animate-[pulse_1s_ease-in-out_infinite]">{{ countdownValue() }}</span>
-            <span class="text-slate-300 font-medium tracking-[0.3em] text-lg mt-2 uppercase">{{ countdownValue() === 'ACTION!' ? 'Hành động!' : 'Chuẩn bị ghi hình' }}</span>
-            <button (click)="stopRecording()" class="mt-12 px-8 py-3 bg-[#E11D48]/20 hover:bg-[#E11D48]/40 text-red-200 font-medium rounded-full transition-colors border border-[#E11D48]/30 shadow-lg text-sm tracking-widest uppercase cursor-pointer">Hủy bỏ</button>
+            <span class="text-slate-200 font-semibold tracking-[0.3em] mt-2 uppercase transition-all duration-300"
+                  [class.text-2xl]="uiMode() === 'enhanced'"
+                  [class.text-lg]="uiMode() !== 'enhanced'">{{ countdownValue() === 'ACTION!' ? 'Hành động!' : 'Chuẩn bị ghi hình' }}</span>
+            <button (click)="stopRecording()" class="mt-12 px-8 py-3 bg-[#E11D48]/20 hover:bg-[#E11D48]/40 text-red-200 font-medium rounded-full transition-colors border border-[#E11D48]/30 shadow-lg tracking-widest uppercase cursor-pointer transition-all duration-300"
+                    [class.text-base]="uiMode() === 'enhanced'" [class.font-bold]="uiMode() === 'enhanced'" [class.px-10]="uiMode() === 'enhanced'" [class.py-4]="uiMode() === 'enhanced'"
+                    [class.text-sm]="uiMode() !== 'enhanced'">Hủy bỏ</button>
        </div>
     </div>
   }
@@ -117,7 +137,7 @@
     </button>
 
     <!-- Status text & Time -->
-    <div class="absolute top-full mt-8 text-center flex flex-col items-center justify-start w-72">
+    <div class="absolute top-full mt-8 left-1/2 -translate-x-1/2 text-center flex flex-col items-center justify-start w-[340px] sm:w-[460px] px-4">
       @if (isRecording()) {
         <div class="flex items-center space-x-3 text-[#FDA4AF] font-mono text-3xl tracking-wider font-light drop-shadow-[0_0_12px_rgba(225,29,72,0.5)] select-none">
            <span class="w-2.5 h-2.5 bg-[#E11D48] rounded-full animate-pulse shadow-[0_0_8px_rgba(225,29,72,0.9)] mt-1"></span>
@@ -137,25 +157,39 @@
          <div class="flex flex-col items-center space-y-3 pointer-events-none select-none w-full">
            <!-- Camera Toggle -->
            <div 
-              class="group flex items-center gap-3 backdrop-blur-md bg-slate-900/60 border pl-4 pr-3 py-2 rounded-full pointer-events-auto transition-all duration-300 hover:bg-slate-800/80 shadow-lg"
+              class="group flex items-center gap-3 backdrop-blur-md border pl-4 pr-3 py-2 rounded-full pointer-events-auto transition-all duration-300 shadow-lg"
+              [class.bg-slate-900/60]="uiMode() !== 'enhanced'"
+              [class.hover:bg-slate-800/80]="uiMode() !== 'enhanced'"
+              [class.bg-slate-900]="uiMode() === 'enhanced'"
+              [class.hover:bg-slate-800]="uiMode() === 'enhanced'"
               [class.border-slate-700/50]="!isCameraEnabled()"
-              [class.border-emerald-500/30]="isCameraEnabled()"
+              [class.border-emerald-500/30]="uiMode() !== 'enhanced' && isCameraEnabled()"
+              [class.border-amber-500/50]="uiMode() === 'enhanced' && isCameraEnabled()"
               [class.opacity-40]="cameraError() !== null"
               [attr.title]="cameraError()"
             >
              <div class="flex items-center gap-2">
                  <!-- Status Dot -->
-                 <div class="relative flex h-2 w-2">
+                 <div class="relative flex" [class.h-2]="uiMode() !== 'enhanced'" [class.w-2]="uiMode() !== 'enhanced'" [class.h-3]="uiMode() === 'enhanced'" [class.w-3]="uiMode() === 'enhanced'">
                    @if (isCameraEnabled()) {
-                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                     <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" [class.bg-emerald-400]="uiMode() !== 'enhanced'" [class.bg-amber-400]="uiMode() === 'enhanced'"></span>
+                     <span class="relative inline-flex rounded-full h-full w-full" [class.bg-emerald-500]="uiMode() !== 'enhanced'" [class.bg-amber-500]="uiMode() === 'enhanced'"></span>
                    } @else {
-                     <span class="relative inline-flex rounded-full h-2 w-2 bg-slate-600"></span>
+                     <span class="relative inline-flex rounded-full h-full w-full bg-slate-600"></span>
                    }
                  </div>
                  
                  <!-- Label -->
-                 <span class="text-xs font-mono font-medium tracking-widest uppercase pt-0.5 transition-colors duration-300" [class.text-emerald-400]="isCameraEnabled()" [class.text-slate-400]="!isCameraEnabled()">
+                 <span class="font-mono tracking-widest uppercase pt-0.5 transition-colors duration-300" 
+                    [class.text-xs]="uiMode() !== 'enhanced'" 
+                    [class.font-medium]="uiMode() !== 'enhanced'"
+                    [class.text-sm]="uiMode() === 'enhanced'" 
+                    [class.font-bold]="uiMode() === 'enhanced'" 
+                    [class.text-emerald-400]="uiMode() !== 'enhanced' && isCameraEnabled()" 
+                    [class.text-amber-400]="uiMode() === 'enhanced' && isCameraEnabled()" 
+                    [class.text-slate-400]="uiMode() !== 'enhanced' && !isCameraEnabled()"
+                    [class.text-slate-300]="uiMode() === 'enhanced' && !isCameraEnabled()"
+                  >
                    CAMERA
                  </span>
              </div>
@@ -166,14 +200,21 @@
              <button 
                (click)="toggleCamera()"
                [disabled]="isRecording() || isCountingDown()"
-               class="relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-               [class.bg-emerald-500/80]="isCameraEnabled()"
+               class="relative inline-flex items-center rounded-full transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer p-[2px]"
+               [class.h-5]="uiMode() !== 'enhanced'" [class.w-9]="uiMode() !== 'enhanced'"
+               [class.h-6]="uiMode() === 'enhanced'" [class.w-11]="uiMode() === 'enhanced'"
+               [class.bg-emerald-500/80]="uiMode() !== 'enhanced' && isCameraEnabled()"
+               [class.bg-amber-500]="uiMode() === 'enhanced' && isCameraEnabled()"
                [class.bg-slate-700]="!isCameraEnabled()"
              >
                <span 
-                 class="inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform ease-in-out shadow-sm"
-                 [class.translate-x-5]="isCameraEnabled()"
-                 [class.translate-x-1]="!isCameraEnabled()"
+                 class="inline-block transform rounded-full bg-white transition-transform ease-in-out shadow-sm"
+                 [class.h-4]="uiMode() !== 'enhanced'" [class.w-4]="uiMode() !== 'enhanced'"
+                 [class.h-5]="uiMode() === 'enhanced'" [class.w-5]="uiMode() === 'enhanced'"
+                 [class.translate-x-4]="uiMode() !== 'enhanced' && isCameraEnabled()"
+                 [class.translate-x-0]="uiMode() !== 'enhanced' && !isCameraEnabled()"
+                 [class.translate-x-5]="uiMode() === 'enhanced' && isCameraEnabled()"
+                 [class.translate-x-0]="uiMode() === 'enhanced' && !isCameraEnabled()"
                ></span>
              </button>
            </div>
@@ -188,7 +229,10 @@
 
            @if (recordingAttempted() && (hasMicDevice() === false || micPermission() === 'denied')) {
              <div class="flex flex-wrap items-center justify-center gap-2 mt-2 pointer-events-auto select-none">
-              <div class="flex items-center space-x-1.5 text-orange-400 bg-orange-500/10 px-3 py-1.5 rounded-full text-xs font-medium border border-orange-500/20">
+              <div [class]="uiMode() === 'enhanced'
+                ? 'flex items-center space-x-1.5 text-orange-400 bg-orange-500/10 rounded-full font-bold border border-orange-500/20 px-4 py-2.5 text-sm transition-all duration-300 shadow-sm'
+                : 'flex items-center space-x-1.5 text-orange-400 bg-orange-500/10 rounded-full font-medium border border-orange-500/20 px-3 py-1.5 text-xs transition-all duration-300'"
+              >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
                   <path fill-rule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5z" clip-rule="evenodd" />
                 </svg>
@@ -199,7 +243,10 @@
 
            @if (cameraError()) {
              <div class="flex flex-wrap items-center justify-center gap-2 mt-2 pointer-events-auto select-none">
-              <div class="flex items-center space-x-1.5 text-rose-400 bg-rose-500/10 px-3 py-1.5 rounded-full text-xs font-medium border border-rose-500/20">
+              <div [class]="uiMode() === 'enhanced'
+                ? 'flex items-center space-x-1.5 text-rose-400 bg-rose-500/10 rounded-full font-bold border border-rose-500/20 px-4 py-2.5 text-sm transition-all duration-300 shadow-sm'
+                : 'flex items-center space-x-1.5 text-rose-400 bg-rose-500/10 rounded-full font-medium border border-rose-500/20 px-3 py-1.5 text-xs transition-all duration-300'"
+              >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-rose-400">
                   <path fill-rule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5z" clip-rule="evenodd" />
                 </svg>
@@ -214,42 +261,52 @@
 
   <!-- Footer -->
   <footer class="absolute bottom-6 text-center w-full">
-    <p class="text-[10px] text-slate-400/90 font-light tracking-widest uppercase flex items-center justify-center gap-1.5 flex-wrap">
-      <button (click)="openSettingsModal()" class="hover:text-slate-200 transition-colors font-medium text-slate-300 underline decoration-slate-500 underline-offset-4 uppercase cursor-pointer">Cài đặt</button>
+    <p class="font-light tracking-widest uppercase flex items-center justify-center gap-2 flex-wrap transition-all duration-300"
+       [class.text-slate-100]="uiMode() === 'enhanced'" [class.text-[13px]]="uiMode() === 'enhanced'" [class.font-medium]="uiMode() === 'enhanced'"
+       [class.text-slate-400]="uiMode() !== 'enhanced'" [class.text-[10px]]="uiMode() !== 'enhanced'">
+      <button (click)="openSettingsModal()" class="hover:text-slate-200 transition-colors font-medium text-slate-300 underline decoration-slate-500 underline-offset-4 uppercase cursor-pointer"
+              [class.font-bold]="uiMode() === 'enhanced'">Cài đặt</button>
       <span>&bull;</span>
-      <span>ICHI ICHI &bull; v1.0.24</span>
+      <span>ICHI ICHI &bull; v1.0.25</span>
       <span>&bull;</span>
-      <a href="https://github.com/kiencang/Ichi-Ichi" target="_blank" rel="noopener noreferrer" class="hover:text-slate-200 transition-colors cursor-pointer">GitHub</a>
+      <a href="https://github.com/kiencang/Ichi-Ichi" target="_blank" rel="noopener noreferrer" class="hover:text-slate-200 transition-colors cursor-pointer"
+         [class.font-bold]="uiMode() === 'enhanced'">GitHub</a>
       <span>&bull;</span>
       <span>Nguyễn Đức Anh</span>
       <span>&bull;</span>
-      <a href="mailto:contact@wpsila.com" class="hover:text-slate-200 transition-colors cursor-pointer">contact@wpsila.com</a>
+      <a href="mailto:contact@wpsila.com" class="hover:text-slate-200 transition-colors cursor-pointer"
+         [class.font-bold]="uiMode() === 'enhanced'">contact@wpsila.com</a>
       <span>&bull;</span>
-      <button (click)="showGuideModal.set(true)" class="hover:text-slate-200 transition-colors font-medium text-slate-300 underline decoration-slate-500 underline-offset-4 uppercase cursor-pointer">Hướng dẫn sử dụng</button>
+      <button (click)="showGuideModal.set(true)" class="hover:text-slate-200 transition-colors font-medium text-slate-300 underline decoration-slate-500 underline-offset-4 uppercase cursor-pointer"
+              [class.font-bold]="uiMode() === 'enhanced'">Hướng dẫn sử dụng</button>
     </p>
   </footer>
 
   <!-- User Guide Modal Component -->
-  <app-guide-modal [(show)]="showGuideModal"></app-guide-modal>
+  <app-guide-modal [(show)]="showGuideModal" [uiMode]="uiMode()"></app-guide-modal>
 
   <!-- Settings Modal Component -->
   <app-settings-modal
     [(show)]="showSettingsModal"
     [(tempQualityPreset)]="tempQualityPreset"
     [(tempCameraSize)]="tempCameraSize"
+    [(tempUiMode)]="tempUiMode"
     (saveSettings)="saveSettings()"
     (resetSettings)="resetToDefaultSettings()"
   ></app-settings-modal>
 
   @if (isCameraEnabled() && cameraStream()) {
     <div 
-      class="fixed z-[100] rounded-full overflow-hidden shadow-2xl border-2 border-emerald-500/80 bg-slate-900 flex items-center justify-center transition-shadow select-none group transition-opacity duration-300"
+      class="fixed z-[100] rounded-full overflow-hidden shadow-2xl border-2 bg-slate-900 flex items-center justify-center transition-shadow select-none group transition-opacity duration-300"
+       [class.border-emerald-500/80]="uiMode() !== 'enhanced'"
+       [class.border-amber-500]="uiMode() === 'enhanced'"
        [class.opacity-0]="isRecording()"
        [class.pointer-events-none]="isRecording()"
        [class.cursor-move]="!isRecording() && !isCountingDown()"
        [class.cursor-not-allowed]="isRecording() || isCountingDown()"
        [class.hover:ring-4]="!isRecording() && !isCountingDown()"
-       [class.hover:ring-emerald-500/30]="!isRecording() && !isCountingDown()"
+       [class.hover:ring-emerald-500/30]="uiMode() !== 'enhanced' && !isRecording() && !isCountingDown()"
+       [class.hover:ring-amber-500/30]="uiMode() === 'enhanced' && !isRecording() && !isCountingDown()"
        [style.left.px]="cameraPos().x"
        [style.top.px]="cameraPos().y"
        [style.width.px]="showSettingsModal() ? tempCameraSize() : cameraSize()"

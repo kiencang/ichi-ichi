@@ -51,6 +51,8 @@ export class App implements OnDestroy, OnInit {
   tempQualityPreset = signal<'high' | 'medium' | 'low'>('medium');
   cameraSize = signal<number>(120);
   tempCameraSize = signal<number>(120);
+  uiMode = signal<'default' | 'enhanced'>('default');
+  tempUiMode = signal<'default' | 'enhanced'>('default');
   showSettingsModal = signal(false);
 
   hasMicDevice = this.deviceDetector.hasMicDevice;
@@ -83,12 +85,14 @@ export class App implements OnDestroy, OnInit {
   openSettingsModal() {
       this.tempQualityPreset.set(this.qualityPreset());
       this.tempCameraSize.set(this.cameraSize());
+      this.tempUiMode.set(this.uiMode());
       this.showSettingsModal.set(true);
   }
 
   saveSettings() {
       this.qualityPreset.set(this.tempQualityPreset());
       this.cameraSize.set(this.tempCameraSize());
+      this.uiMode.set(this.tempUiMode());
       this.showSettingsModal.set(false);
       this.successMessage.set('Đã lưu cài đặt thành công!');
       this.showSuccessToast.set(true);
@@ -98,8 +102,10 @@ export class App implements OnDestroy, OnInit {
   resetToDefaultSettings() {
       this.qualityPreset.set('medium');
       this.cameraSize.set(120);
+      this.uiMode.set('default');
       this.tempQualityPreset.set('medium');
       this.tempCameraSize.set(120);
+      this.tempUiMode.set('default');
       this.showSettingsModal.set(false);
       this.successMessage.set('Các cài đặt đã được chuyển về mặc định');
       this.showSuccessToast.set(true);
