@@ -26,17 +26,38 @@ export class CanvasMixer {
         const windowW = config.windowWidth || 1920;
         const windowH = config.windowHeight || 1080;
 
-        const relX = config.cameraPos.x / windowW;
-        const relY = config.cameraPos.y / windowH;
-        const scale = canvasEle.height / windowH;
-        const camRadius = (config.cameraSize / 2) * scale;
+        const scaleX = canvasEle.width / windowW;
+        const scaleY = canvasEle.height / windowH;
+        
+        // Để camera tỉ lệ thuận với màn hình mà không bị méo hoặc quá to
+        const scale = Math.min(scaleX, scaleY);
+        const targetSize = config.cameraSize * scale;
+        const camRadius = targetSize / 2;
 
-        let x = relX * canvasEle.width;
-        let y = relY * canvasEle.height;
+        const leftPadding = config.cameraPos.x;
+        const rightPadding = windowW - (config.cameraPos.x + config.cameraSize);
+        const topPadding = config.cameraPos.y;
+        const bottomPadding = windowH - (config.cameraPos.y + config.cameraSize);
 
-        // Constraint camera within canvas boundaries
-        x = Math.max(camRadius, Math.min(x + camRadius, canvasEle.width - camRadius)) - camRadius;
-        y = Math.max(camRadius, Math.min(y + camRadius, canvasEle.height - camRadius)) - camRadius;
+        let x = 0;
+        let y = 0;
+
+        // Bám theo lề gần nhất để đảm bảo lề hiển thị trên canvas giống hệt trên trình duyệt
+        if (leftPadding < rightPadding) {
+            x = leftPadding * scale;
+        } else {
+            x = canvasEle.width - (rightPadding * scale) - targetSize;
+        }
+
+        if (topPadding < bottomPadding) {
+            y = topPadding * scale;
+        } else {
+            y = canvasEle.height - (bottomPadding * scale) - targetSize;
+        }
+
+        // Clamp một lần nữa để chắc chắn camera không bị văng ra khỏi map khi scale có sai số
+        x = Math.max(0, Math.min(x, canvasEle.width - targetSize));
+        y = Math.max(0, Math.min(y, canvasEle.height - targetSize));
 
         canvasCtx.save();
         canvasCtx.beginPath();
@@ -47,7 +68,6 @@ export class CanvasMixer {
         const vW = camVideoEl.videoWidth;
         const vH = camVideoEl.videoHeight;
         const aspect = vW / vH;
-        const targetSize = camRadius * 2;
         let sW = vW;
         let sH = vH;
 

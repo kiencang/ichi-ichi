@@ -131,7 +131,6 @@ export class App implements OnDestroy, OnInit {
   async ngOnInit() {
       if (typeof window !== 'undefined') {
           this.updateCachedWindowSize();
-          this.cameraPos.set({ x: 20, y: this.cachedWindowHeight - 200 }); // default pos
 
           // Load saved settings from localStorage
           const storedQuality = localStorage.getItem('ichi_qualityPreset') as 'high' | 'medium' | 'low';
@@ -148,6 +147,12 @@ export class App implements OnDestroy, OnInit {
           if (storedMode && ['default', 'enhanced'].includes(storedMode)) {
               this.uiMode.set(storedMode);
           }
+
+          const initCamSize = this.cameraSize();
+          this.cameraPos.set({ 
+              x: this.cachedWindowWidth - initCamSize - 20, 
+              y: this.cachedWindowHeight - initCamSize - 20 
+          });
       }
       await this.deviceDetector.initPermissions();
   }
