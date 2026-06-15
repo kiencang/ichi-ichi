@@ -63,6 +63,8 @@ export class App implements OnDestroy, OnInit {
   tempCameraSize = this.settingsService.tempCameraSize;
   uiMode = this.settingsService.uiMode;
   tempUiMode = this.settingsService.tempUiMode;
+  fpsPreset = this.settingsService.fpsPreset;
+  tempFpsPreset = this.settingsService.tempFpsPreset;
   showSettingsModal = signal(false);
 
   hasMicDevice = this.deviceDetector.hasMicDevice;
@@ -217,6 +219,7 @@ export class App implements OnDestroy, OnInit {
         cameraPos: this.cameraPos(),
         cameraSize: this.cameraSize(),
         qualityPreset: this.qualityPreset(),
+        fpsPreset: this.fpsPreset(),
         cachedWindowWidth: this.cachedWindowWidth,
         cachedWindowHeight: this.cachedWindowHeight
     });

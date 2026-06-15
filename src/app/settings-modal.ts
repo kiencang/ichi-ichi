@@ -192,41 +192,115 @@ import { MatIconModule } from '@angular/material/icon';
                     </label>
                   </div>
                 </div>
-                
-                <!-- Camera Size Card -->
+
+                <!-- Tốc độ khung hình (FPS) Option Card -->
                 <div class="bg-slate-950/50 border border-slate-800/80 rounded-xl p-4 md:p-5 space-y-3.5 shadow-inner">
-                  <h3 class="font-medium text-slate-200 mb-1 select-none pb-2 border-b border-slate-800/50 flex items-center gap-2"
+                  <h3 class="font-medium text-slate-200 select-none pb-2 border-b border-slate-800/50 flex items-center gap-2"
                       [class.text-base]="tempUiMode() === 'enhanced'" [class.font-semibold]="tempUiMode() === 'enhanced'"
                       [class.text-sm]="tempUiMode() !== 'enhanced'">
                     <span class="w-1.5 h-1.5 rounded-full animate-[pulse_2s_infinite]"
                           [class.bg-emerald-500]="tempUiMode() !== 'enhanced'"
                           [class.bg-amber-500]="tempUiMode() === 'enhanced'"></span>
-                    Kích cỡ Video (Webcam)
+                    Tốc độ khung hình (FPS)
                   </h3>
-                  <div class="flex items-center gap-4 pt-1">
-                    <span class="font-mono w-12 text-slate-400"
-                          [class.text-sm]="tempUiMode() === 'enhanced'" [class.text-slate-300]="tempUiMode() === 'enhanced'"
-                          [class.text-xs]="tempUiMode() !== 'enhanced'">120px</span>
-                    <input 
-                       type="range" 
-                       min="120" 
-                       max="360" 
-                       step="5"
-                       [value]="tempCameraSize()" 
-                       (input)="updateCameraSize($event)"
-                       class="flex-1 h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2"
-                       [class.accent-emerald-500]="tempUiMode() !== 'enhanced'" [class.focus:ring-emerald-500/50]="tempUiMode() !== 'enhanced'"
-                       [class.accent-amber-500]="tempUiMode() === 'enhanced'" [class.focus:ring-amber-500/50]="tempUiMode() === 'enhanced'"
-                    >
-                    <span class="font-mono w-12 text-right text-slate-400"
-                          [class.text-sm]="tempUiMode() === 'enhanced'" [class.text-slate-300]="tempUiMode() === 'enhanced'"
-                          [class.text-xs]="tempUiMode() !== 'enhanced'">360px</span>
+                  <div class="grid grid-cols-2 gap-3">
+                    <label class="group relative flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors"
+                        [class.bg-slate-800]="tempFpsPreset() === 30" [class.border-emerald-500]="tempUiMode() !== 'enhanced' && tempFpsPreset() === 30" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempFpsPreset() === 30"
+                        [class.bg-slate-850/40]="tempFpsPreset() !== 30" [class.border-slate-800/70]="tempFpsPreset() !== 30"
+                        [class.hover:border-slate-600]="tempFpsPreset() !== 30">
+                      
+                      <!-- Elegant Tip Tooltip -->
+                      <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 text-center scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-200 z-50 bg-slate-950/95 border border-slate-700/50 px-2.5 py-1.5 text-[11px] leading-normal text-slate-200 rounded-lg shadow-xl backdrop-blur-md selection:bg-transparent">
+                        Đủ cho phần lớn trường hợp & phù hợp cho máy cấu hình trung bình
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-950/95"></div>
+                      </div>
+
+                      <div>
+                        <div class="font-medium text-slate-200 select-none border-none pb-0"
+                             [class.text-base]="tempUiMode() === 'enhanced'"
+                             [class.text-sm]="tempUiMode() !== 'enhanced'">30 FPS</div>
+                      </div>
+                      <input type="radio" name="fpsPreset" value="30" [checked]="tempFpsPreset() === 30" (change)="setFpsPreset(30)" class="hidden">
+                      @if (tempFpsPreset() === 30) {
+                        <div class="rounded-full border-slate-900 shrink-0 select-none"
+                             [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
+                             [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
+                             [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
+                             [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'" [class.border-[3px]]="tempUiMode() !== 'enhanced'"></div>
+                      } @else {
+                        <div class="rounded-full border border-slate-600 col-span-1 shrink-0 select-none"
+                             [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'"
+                             [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'"></div>
+                      }
+                    </label>
+
+                    <label class="group relative flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors"
+                        [class.bg-slate-800]="tempFpsPreset() === 60" [class.border-emerald-500]="tempUiMode() !== 'enhanced' && tempFpsPreset() === 60" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempFpsPreset() === 60"
+                        [class.bg-slate-850/40]="tempFpsPreset() !== 60" [class.border-slate-800/70]="tempFpsPreset() !== 60"
+                        [class.hover:border-slate-600]="tempFpsPreset() !== 60">
+                      
+                      <!-- Elegant Tip Tooltip -->
+                      <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 text-center scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-200 z-50 bg-slate-950/95 border border-slate-700/50 px-2.5 py-1.5 text-[11px] leading-normal text-slate-200 rounded-lg shadow-xl backdrop-blur-md selection:bg-transparent">
+                        Khi video có chuyển động nhanh & cấu hình máy của bạn cao
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-950/95"></div>
+                      </div>
+
+                      <div>
+                        <div class="font-medium text-slate-200 select-none border-none pb-0"
+                             [class.text-base]="tempUiMode() === 'enhanced'"
+                             [class.text-sm]="tempUiMode() !== 'enhanced'">60 FPS</div>
+                      </div>
+                      <input type="radio" name="fpsPreset" value="60" [checked]="tempFpsPreset() === 60" (change)="setFpsPreset(60)" class="hidden">
+                      @if (tempFpsPreset() === 60) {
+                        <div class="rounded-full border-slate-900 shrink-0 select-none"
+                             [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
+                             [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
+                             [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
+                             [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'" [class.border-[3px]]="tempUiMode() !== 'enhanced'"></div>
+                      } @else {
+                        <div class="rounded-full border border-slate-600 col-span-1 shrink-0 select-none"
+                             [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'"
+                             [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'"></div>
+                      }
+                    </label>
                   </div>
-                  <div class="text-center mt-1 font-mono font-bold"
+                </div>
+              </div>
+
+              <!-- Camera Size Slider (Webcam) - spans full width inside the same grid or underneath -->
+              <div class="bg-slate-950/50 border border-slate-800/80 rounded-xl p-4 md:p-5 space-y-3.5 shadow-inner col-span-1 md:col-span-2">
+                <h3 class="relative font-medium text-slate-200 mb-1 select-none pb-2 border-b border-slate-800/50 flex items-center justify-between gap-2"
+                    [class.text-base]="tempUiMode() === 'enhanced'" [class.font-semibold]="tempUiMode() === 'enhanced'"
+                    [class.text-sm]="tempUiMode() !== 'enhanced'">
+                  <div class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full animate-[pulse_2s_infinite]"
+                          [class.bg-emerald-500]="tempUiMode() !== 'enhanced'"
+                          [class.bg-amber-500]="tempUiMode() === 'enhanced'"></span>
+                    Kích cỡ Video (Webcam)
+                  </div>
+                  <span class="font-mono font-bold text-xs px-2 py-0.5 rounded-md bg-slate-900 border border-slate-800 shadow-sm md:absolute md:left-1/2 md:-translate-x-1/2"
                        [class.text-emerald-400]="tempUiMode() !== 'enhanced'"
                        [class.text-amber-400]="tempUiMode() === 'enhanced'"
-                       [class.text-base]="tempUiMode() === 'enhanced'"
-                       [class.text-xs]="tempUiMode() !== 'enhanced'">{{ tempCameraSize() }}px</div>
+                       [class.text-sm]="tempUiMode() === 'enhanced'">{{ tempCameraSize() }}px</span>
+                </h3>
+                <div class="flex items-center gap-4 pt-1">
+                  <span class="font-mono w-12 text-slate-400"
+                        [class.text-sm]="tempUiMode() === 'enhanced'" [class.text-slate-300]="tempUiMode() === 'enhanced'"
+                        [class.text-xs]="tempUiMode() !== 'enhanced'">120px</span>
+                  <input 
+                     type="range" 
+                     min="120" 
+                     max="360" 
+                     step="5"
+                     [value]="tempCameraSize()" 
+                     (input)="updateCameraSize($event)"
+                     class="flex-1 h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2"
+                     [class.accent-emerald-500]="tempUiMode() !== 'enhanced'" [class.focus:ring-emerald-500/50]="tempUiMode() !== 'enhanced'"
+                     [class.accent-amber-500]="tempUiMode() === 'enhanced'" [class.focus:ring-amber-500/50]="tempUiMode() === 'enhanced'"
+                  >
+                  <span class="font-mono w-12 text-right text-slate-400"
+                        [class.text-sm]="tempUiMode() === 'enhanced'" [class.text-slate-300]="tempUiMode() === 'enhanced'"
+                        [class.text-xs]="tempUiMode() !== 'enhanced'">360px</span>
                 </div>
               </div>
 
@@ -258,6 +332,7 @@ export class SettingsModal {
   tempQualityPreset = model<'high' | 'medium' | 'low'>('medium');
   tempCameraSize = model<number>(120);
   tempUiMode = model<'default' | 'enhanced'>('default');
+  tempFpsPreset = model<30 | 60>(30);
 
   saveSettings = output<void>();
   resetSettings = output<void>();
@@ -268,6 +343,10 @@ export class SettingsModal {
 
   setUiMode(mode: 'default' | 'enhanced') {
     this.tempUiMode.set(mode);
+  }
+
+  setFpsPreset(fps: 30 | 60) {
+    this.tempFpsPreset.set(fps);
   }
 
   updateCameraSize(event: Event) {

@@ -11,6 +11,7 @@ export interface RecordConfig {
   cameraPos: { x: number, y: number };
   cameraSize: number;
   qualityPreset: 'high' | 'medium' | 'low';
+  fpsPreset?: number;
   cachedWindowWidth: number;
   cachedWindowHeight: number;
 }
@@ -52,7 +53,7 @@ export class RecordingService {
     this.errorMessage.set('');
     this.recordingAttempted.set(true);
     try {
-      const idealFps = 60;
+      const idealFps = config.fpsPreset || 30;
       try {
         this.displayStream = await navigator.mediaDevices.getDisplayMedia({
           video: { 
