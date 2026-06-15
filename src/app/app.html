@@ -38,103 +38,29 @@
         [class.text-base]="uiMode() === 'enhanced'"
         [class.font-medium]="uiMode() === 'enhanced'"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" [class.w-5]="uiMode() !== 'enhanced'" [class.h-5]="uiMode() !== 'enhanced'" [class.w-6]="uiMode() === 'enhanced'" [class.h-6]="uiMode() === 'enhanced'">
-           <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 11.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
-        </svg>
+        <mat-icon [class.!w-[20px]]="uiMode() !== 'enhanced'" [class.!h-[20px]]="uiMode() !== 'enhanced'" [class.!text-[20px]]="uiMode() !== 'enhanced'" [class.!w-[24px]]="uiMode() === 'enhanced'" [class.!h-[24px]]="uiMode() === 'enhanced'" [class.!text-[24px]]="uiMode() === 'enhanced'">
+           check_circle
+        </mat-icon>
         <span>{{ successMessage() }}</span>
       </div>
     </div>
   }
 
   @if (isCountingDown()) {
-    <div class="fixed inset-0 z-[110] flex items-center justify-center bg-[#070b14]/80 backdrop-blur-sm transition-all pointer-events-auto">
-       <div class="select-none flex flex-col items-center">
-            <span [class.text-[180px]]="countdownValue() !== 'ACTION!'" [class.text-[70px]]="countdownValue() === 'ACTION!'" [class.sm:text-[100px]]="countdownValue() === 'ACTION!'" [class.md:text-[140px]]="countdownValue() === 'ACTION!'" class="font-mono font-bold text-white leading-none drop-shadow-2xl animate-[pulse_1s_ease-in-out_infinite]">{{ countdownValue() }}</span>
-            <span class="text-slate-200 font-semibold tracking-[0.3em] mt-2 uppercase transition-all duration-300"
-                  [class.text-2xl]="uiMode() === 'enhanced'"
-                  [class.text-lg]="uiMode() !== 'enhanced'">{{ countdownValue() === 'ACTION!' ? 'Hành động!' : 'Chuẩn bị ghi hình' }}</span>
-            <button (click)="stopRecording()" class="mt-12 px-8 py-3 bg-[#E11D48]/20 hover:bg-[#E11D48]/40 text-red-200 font-medium rounded-full transition-colors border border-[#E11D48]/30 shadow-lg tracking-widest uppercase cursor-pointer transition-all duration-300"
-                    [class.text-base]="uiMode() === 'enhanced'" [class.font-bold]="uiMode() === 'enhanced'" [class.px-10]="uiMode() === 'enhanced'" [class.py-4]="uiMode() === 'enhanced'"
-                    [class.text-sm]="uiMode() !== 'enhanced'">Hủy bỏ</button>
-       </div>
-    </div>
+    <app-countdown-overlay
+      [countdownValue]="countdownValue()"
+      [uiMode]="uiMode()"
+      (cancel)="stopRecording()"
+    ></app-countdown-overlay>
   }
 
   <div class="relative z-10 flex flex-col items-center -translate-y-[3vh]">
     
     <!-- Record Button -->
-    <button 
-      (click)="toggleRecording()"
-      class="group relative flex items-center justify-center w-36 h-36 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-red-500/50 cursor-pointer"
-      title="{{ isRecording() ? 'Dừng quay' : 'Click để bắt đầu quay màn hình' }}"
-    >
-      <!-- Old / Worn out Outer Background -->
-      <div 
-        class="absolute inset-0 rounded-full transition-all duration-500 pointer-events-none overflow-hidden"
-        [class.bg-gradient-to-br]="!isRecording()" [class.from-[#be123c]]="!isRecording()" [class.to-[#880d28]]="!isRecording()"
-        [class.group-hover:from-[#9f0f32]]="!isRecording()" [class.group-hover:to-[#720b22]]="!isRecording()"
-        [class.shadow-[inset_0_4px_10px_rgba(0,0,0,0.7),inset_0_-2px_6px_rgba(255,255,255,0.1),0_15px_30px_rgba(0,0,0,0.5)]]="!isRecording()"
-        [class.scale-100]="!isRecording()"
-        [class.group-hover:scale-[1.02]]="!isRecording()"
-        [class.bg-transparent]="isRecording()"
-      >
-        @if (!isRecording()) {
-          <!-- Faded wear ring -->
-          <div class="absolute inset-0 rounded-full border-[4px] border-[#f43f5e]/10 mix-blend-overlay"></div>
-          <!-- Dark dirt inset -->
-          <div class="absolute inset-2 rounded-full border-2 border-black/40 shadow-[inset_0_0_15px_rgba(0,0,0,0.8)]"></div>
-          <!-- Radial fade for worn center pressed area -->
-          <div class="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_20%,rgba(0,0,0,0.5)_90%)] mix-blend-hard-light"></div>
-          <!-- Scrape / light reflection marks -->
-          <div class="absolute -top-4 -left-4 w-24 h-24 bg-white/5 rounded-full blur-md transform rotate-45"></div>
-        }
-      </div>
-
-      <!-- Pulsing rings when recording -->
-      @if (isRecording()) {
-        <span class="absolute inset-0 rounded-full border-[3px] border-[#BE123C] animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite] opacity-60"></span>
-        <span class="absolute inset-4 rounded-full border-[3px] border-[#BE123C] animate-[ping_2s_cubic-bezier(0,0,0.2,1)_1s_infinite] opacity-40"></span>
-        <span class="absolute inset-0 rounded-full border-[8px] border-[#880d28] shadow-[inset_0_4px_10px_rgba(0,0,0,0.7),0_0_24px_rgba(225,29,72,0.6)]"></span>
-      }
-
-      <!-- Cinematic Lens Bezel Engraving -->
-      @if (!isRecording()) {
-        <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full pointer-events-none z-20 opacity-50 mix-blend-overlay drop-shadow-[0_1px_1px_rgba(0,0,0,0.9)] transition-all duration-300 transform group-hover:rotate-12 group-hover:opacity-70">
-          <path id="bezel-path" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none" />
-          <text font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="4.5" font-weight="600" fill="#ffffff" letter-spacing="0.25em" class="uppercase">
-            <textPath href="#bezel-path" startOffset="10%" text-anchor="middle">ICHI ICHI</textPath>
-          </text>
-        </svg>
-      }
-
-      <!-- Center Icon/Shape (also worn) -->
-      <div 
-        class="relative z-10 transition-all duration-500 pointer-events-none flex items-center justify-center overflow-hidden w-full h-full"
-        [class.scale-100]="!isRecording()"
-        [class.group-hover:scale-95]="!isRecording()"
-      >
-         <div 
-           class="transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform relative flex items-center justify-center overflow-hidden"
-           [class.bg-[#e2e8f0]]="!isRecording()"
-           [class.w-12]="!isRecording()"
-           [class.h-12]="!isRecording()"
-           [class.rounded-full]="!isRecording()"
-           [class.shadow-[inset_0_3px_5px_rgba(0,0,0,0.4),inset_0_-2px_4px_rgba(255,255,255,0.6),0_4px_10px_rgba(0,0,0,0.6)]]="!isRecording()"
-           [class.bg-gradient-to-br]="isRecording()" [class.from-[#be123c]]="isRecording()" [class.to-[#880d28]]="isRecording()"
-           [class.w-[52px]]="isRecording()"
-           [class.h-[52px]]="isRecording()"
-           [class.rounded-xl]="isRecording()"
-           [class.scale-95]="isRecording()"
-           [class.shadow-[inset_0_3px_8px_rgba(0,0,0,0.6),0_4px_12px_rgba(0,0,0,0.5)]]="isRecording()"
-         >
-           @if (!isRecording()) {
-             <!-- Dirt/wear on the white button -->
-             <div class="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.05)_40%,rgba(0,0,0,0.25)_100%)]"></div>
-             <div class="absolute top-1 left-2 w-4 h-3 bg-white/60 blur-[1px] rounded-full rotate-[-30deg]"></div>
-           }
-         </div>
-      </div>
-    </button>
+    <app-record-button
+      [isRecording]="isRecording()"
+      (toggle)="toggleRecording()"
+    ></app-record-button>
 
     <!-- Status text & Time -->
     <div class="absolute top-full mt-8 left-1/2 -translate-x-1/2 text-center flex flex-col items-center justify-start w-[340px] sm:w-[460px] px-4">
@@ -154,133 +80,28 @@
            }
         </div>
       } @else {
-         <div class="flex flex-col items-center space-y-3 pointer-events-none select-none w-full">
-           <!-- Camera Toggle -->
-           <div 
-              class="group flex items-center gap-3 backdrop-blur-md border pl-4 pr-3 py-2 rounded-full pointer-events-auto transition-all duration-300 shadow-lg"
-              [class.bg-slate-900/60]="uiMode() !== 'enhanced'"
-              [class.hover:bg-slate-800/80]="uiMode() !== 'enhanced'"
-              [class.bg-slate-900]="uiMode() === 'enhanced'"
-              [class.hover:bg-slate-800]="uiMode() === 'enhanced'"
-              [class.border-slate-700/50]="!isCameraEnabled()"
-              [class.border-emerald-500/30]="uiMode() !== 'enhanced' && isCameraEnabled()"
-              [class.border-amber-500/50]="uiMode() === 'enhanced' && isCameraEnabled()"
-              [class.opacity-40]="cameraError() !== null"
-              [attr.title]="cameraError()"
-            >
-             <div class="flex items-center gap-2">
-                 <!-- Status Dot -->
-                 <div class="relative flex" [class.h-2]="uiMode() !== 'enhanced'" [class.w-2]="uiMode() !== 'enhanced'" [class.h-3]="uiMode() === 'enhanced'" [class.w-3]="uiMode() === 'enhanced'">
-                   @if (isCameraEnabled()) {
-                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" [class.bg-emerald-400]="uiMode() !== 'enhanced'" [class.bg-amber-400]="uiMode() === 'enhanced'"></span>
-                     <span class="relative inline-flex rounded-full h-full w-full" [class.bg-emerald-500]="uiMode() !== 'enhanced'" [class.bg-amber-500]="uiMode() === 'enhanced'"></span>
-                   } @else {
-                     <span class="relative inline-flex rounded-full h-full w-full bg-slate-600"></span>
-                   }
-                 </div>
-                 
-                 <!-- Label -->
-                 <span class="font-mono tracking-widest uppercase pt-0.5 transition-colors duration-300" 
-                    [class.text-xs]="uiMode() !== 'enhanced'" 
-                    [class.font-medium]="uiMode() !== 'enhanced'"
-                    [class.text-sm]="uiMode() === 'enhanced'" 
-                    [class.font-bold]="uiMode() === 'enhanced'" 
-                    [class.text-emerald-400]="uiMode() !== 'enhanced' && isCameraEnabled()" 
-                    [class.text-amber-400]="uiMode() === 'enhanced' && isCameraEnabled()" 
-                    [class.text-slate-400]="uiMode() !== 'enhanced' && !isCameraEnabled()"
-                    [class.text-slate-300]="uiMode() === 'enhanced' && !isCameraEnabled()"
-                  >
-                   CAMERA
-                 </span>
-             </div>
-             
-             <!-- Divider -->
-             <div class="w-px h-4 bg-slate-700/60 mx-1"></div>
-
-             <button 
-               (click)="toggleCamera()"
-               [disabled]="isRecording() || isCountingDown()"
-               class="relative inline-flex items-center rounded-full transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer p-[2px]"
-               [class.h-5]="uiMode() !== 'enhanced'" [class.w-9]="uiMode() !== 'enhanced'"
-               [class.h-6]="uiMode() === 'enhanced'" [class.w-11]="uiMode() === 'enhanced'"
-               [class.bg-emerald-500/80]="uiMode() !== 'enhanced' && isCameraEnabled()"
-               [class.bg-amber-500]="uiMode() === 'enhanced' && isCameraEnabled()"
-               [class.bg-slate-700]="!isCameraEnabled()"
-             >
-               <span 
-                 class="inline-block transform rounded-full bg-white transition-transform ease-in-out shadow-sm"
-                 [class.h-4]="uiMode() !== 'enhanced'" [class.w-4]="uiMode() !== 'enhanced'"
-                 [class.h-5]="uiMode() === 'enhanced'" [class.w-5]="uiMode() === 'enhanced'"
-                 [class.translate-x-4]="uiMode() !== 'enhanced' && isCameraEnabled()"
-                 [class.translate-x-0]="uiMode() !== 'enhanced' && !isCameraEnabled()"
-                 [class.translate-x-5]="uiMode() === 'enhanced' && isCameraEnabled()"
-                 [class.translate-x-0]="uiMode() === 'enhanced' && !isCameraEnabled()"
-               ></span>
-             </button>
-           </div>
-
-           <button (click)="openSettingsModal()" class="flex items-center space-x-2 text-slate-400 hover:text-slate-200 bg-slate-800/40 hover:bg-slate-800/80 px-4 py-2 rounded-full transition-colors pointer-events-auto border border-slate-700/50 cursor-pointer hidden" aria-label="Cài đặt chất lượng video" style="display: none;">
-             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-               <path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854-.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z" />
-               <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-             </svg>
-             <span class="text-xs font-medium uppercase tracking-widest"></span>
-           </button>
-
-           @if (recordingAttempted() && (hasMicDevice() === false || micPermission() === 'denied')) {
-             <div class="flex flex-wrap items-center justify-center gap-2 mt-2 pointer-events-auto select-none">
-              <div [class]="uiMode() === 'enhanced'
-                ? 'flex items-center space-x-1.5 text-orange-400 bg-orange-500/10 rounded-full font-bold border border-orange-500/20 px-4 py-2.5 text-sm transition-all duration-300 shadow-sm'
-                : 'flex items-center space-x-1.5 text-orange-400 bg-orange-500/10 rounded-full font-medium border border-orange-500/20 px-3 py-1.5 text-xs transition-all duration-300'"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
-                  <path fill-rule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5z" clip-rule="evenodd" />
-                </svg>
-                <span>Micro không khả dụng hoặc bị chặn</span>
-              </div>
-             </div>
-           }
-
-           @if (cameraError()) {
-             <div class="flex flex-wrap items-center justify-center gap-2 mt-2 pointer-events-auto select-none">
-              <div [class]="uiMode() === 'enhanced'
-                ? 'flex items-center space-x-1.5 text-rose-400 bg-rose-500/10 rounded-full font-bold border border-rose-500/20 px-4 py-2.5 text-sm transition-all duration-300 shadow-sm'
-                : 'flex items-center space-x-1.5 text-rose-400 bg-rose-500/10 rounded-full font-medium border border-rose-500/20 px-3 py-1.5 text-xs transition-all duration-300'"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-rose-400">
-                  <path fill-rule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5z" clip-rule="evenodd" />
-                </svg>
-                <span>{{ cameraError() }}</span>
-              </div>
-             </div>
-           }
-          </div>
-       }
-     </div>
-   </div>
+         <app-camera-toggle
+           [uiMode]="uiMode()"
+           [isCameraEnabled]="isCameraEnabled()"
+           [isRecording]="isRecording()"
+           [isCountingDown]="isCountingDown()"
+           [cameraError]="cameraError()"
+           [hasMicDevice]="hasMicDevice()"
+           [micPermission]="micPermission()"
+           [recordingAttempted]="recordingAttempted()"
+           (toggleCamera)="toggleCamera()"
+         ></app-camera-toggle>
+      }
+    </div>
+  </div>
 
   <!-- Footer -->
-  <footer class="absolute bottom-6 text-center w-full">
-    <p class="font-light tracking-widest uppercase flex items-center justify-center gap-2 flex-wrap transition-all duration-300"
-       [class.text-slate-100]="uiMode() === 'enhanced'" [class.text-[13px]]="uiMode() === 'enhanced'" [class.font-medium]="uiMode() === 'enhanced'"
-       [class.text-slate-400]="uiMode() !== 'enhanced'" [class.text-[10px]]="uiMode() !== 'enhanced'">
-      <button (click)="openSettingsModal()" class="hover:text-slate-200 transition-colors font-medium text-slate-300 underline decoration-slate-500 underline-offset-4 uppercase cursor-pointer"
-              [class.font-bold]="uiMode() === 'enhanced'">Cài đặt</button>
-      <span>&bull;</span>
-      <span>ICHI ICHI &bull; v1.0.28</span>
-      <span>&bull;</span>
-      <a href="https://github.com/kiencang/Ichi-Ichi" target="_blank" rel="noopener noreferrer" class="hover:text-slate-200 transition-colors cursor-pointer"
-         [class.font-bold]="uiMode() === 'enhanced'">GitHub</a>
-      <span>&bull;</span>
-      <span>Nguyễn Đức Anh</span>
-      <span>&bull;</span>
-      <a href="mailto:contact@wpsila.com" class="hover:text-slate-200 transition-colors cursor-pointer"
-         [class.font-bold]="uiMode() === 'enhanced'">contact@wpsila.com</a>
-      <span>&bull;</span>
-      <button (click)="showGuideModal.set(true)" class="hover:text-slate-200 transition-colors font-medium text-slate-300 underline decoration-slate-500 underline-offset-4 uppercase cursor-pointer"
-              [class.font-bold]="uiMode() === 'enhanced'">Hướng dẫn sử dụng</button>
-    </p>
-  </footer>
+  <app-footer 
+    [uiMode]="uiMode()" 
+    [version]="version" 
+    (openSettings)="openSettingsModal()" 
+    (openGuide)="showGuideModal.set(true)">
+  </app-footer>
 
   <!-- User Guide Modal Component -->
   <app-guide-modal [(show)]="showGuideModal" [uiMode]="uiMode()"></app-guide-modal>
@@ -315,14 +136,22 @@
        [style.top.px]="cameraPos().y"
        [style.width.px]="showSettingsModal() ? tempCameraSize() : cameraSize()"
        [style.height.px]="showSettingsModal() ? tempCameraSize() : cameraSize()"
-       (mousedown)="handleCameraDragStart($event)"
+       appDraggableCamera
+       [cameraSize]="showSettingsModal() ? tempCameraSize() : cameraSize()"
+       [cameraPos]="cameraPos()"
+       [isRecording]="isRecording()"
+       [isCountingDown]="isCountingDown()"
+       [cachedWindowWidth]="cachedWindowWidth"
+       [cachedWindowHeight]="cachedWindowHeight"
+       (positionChange)="cameraPos.set($event)"
+       (draggingStateChange)="isDraggingCam.set($event)"
     >
        <video id="camPreview" autoplay playsinline class="w-full h-full object-cover transform scale-x-[-1] pointer-events-none"></video>
        @if (!isRecording() && !isCountingDown()) {
-          <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-white/80">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
-            </svg>
+          <div class="absolute inset-0 bg-black/30 backdrop-blur-[2px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all pointer-events-none rounded-full">
+            <div class="bg-white/20 p-2 rounded-full border border-white/30 backdrop-blur-md shadow-lg flex items-center justify-center">
+              <mat-icon class="drop-shadow-md !text-[28px] !w-[28px] !h-[28px]" style="color: #ffffff;">open_with</mat-icon>
+            </div>
           </div>
        }
     </div>

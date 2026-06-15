@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, model, output } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-settings-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [],
+  imports: [MatIconModule],
   template: `
     @if (show()) {
       <div class="fixed inset-0 z-[110] flex items-center justify-center bg-transparent transition-all p-4">
@@ -16,18 +17,16 @@ import { ChangeDetectionStrategy, Component, model, output } from '@angular/core
             <h2 class="font-semibold text-slate-100 flex items-center gap-2"
                 [class.text-xl]="tempUiMode() === 'enhanced'" [class.font-bold]="tempUiMode() === 'enhanced'"
                 [class.text-lg]="tempUiMode() !== 'enhanced'">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-slate-400"
-                   [class.w-6]="tempUiMode() === 'enhanced'" [class.h-6]="tempUiMode() === 'enhanced'">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
+              <mat-icon class="text-slate-400 shrink-0" 
+                        [class.!text-[24px]]="tempUiMode() === 'enhanced'" [class.!w-[24px]]="tempUiMode() === 'enhanced'" [class.!h-[24px]]="tempUiMode() === 'enhanced'"
+                        [class.!text-[20px]]="tempUiMode() !== 'enhanced'" [class.!w-[20px]]="tempUiMode() !== 'enhanced'" [class.!h-[20px]]="tempUiMode() !== 'enhanced'">
+                settings
+              </mat-icon>
               Cài đặt chất lượng
             </h2>
-            <button (click)="show.set(false)" class="text-slate-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-slate-800 cursor-pointer"
+            <button (click)="show.set(false)" class="text-slate-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-slate-800 cursor-pointer flex items-center justify-center"
                     [class.scale-110]="tempUiMode() === 'enhanced'">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <mat-icon class="!text-[20px] !w-[20px] !h-[20px]">close</mat-icon>
             </button>
           </div>
           

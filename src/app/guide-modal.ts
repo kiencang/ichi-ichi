@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, model, input } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-guide-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [],
+  imports: [MatIconModule],
   template: `
     @if (show()) {
       <div class="fixed inset-0 z-[110] flex items-center justify-center bg-[#070b14]/85 backdrop-blur-sm transition-all p-4">
@@ -15,9 +16,7 @@ import { ChangeDetectionStrategy, Component, model, input } from '@angular/core'
             <h2 class="text-slate-200 font-medium flex flex-wrap items-center gap-2"
                 [class.text-xl]="uiMode() === 'enhanced'" [class.font-bold]="uiMode() === 'enhanced'"
                 [class.text-lg]="uiMode() !== 'enhanced'">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-slate-400 shrink-0">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-              </svg>
+              <mat-icon class="w-5 h-5 text-slate-400 shrink-0">help_outline</mat-icon>
               <span>Hướng dẫn sử dụng 
                 <span class="font-normal inline-block ml-1"
                       [class.text-base]="uiMode() === 'enhanced'" [class.text-slate-300]="uiMode() === 'enhanced'" [class.font-semibold]="uiMode() === 'enhanced'"
@@ -28,9 +27,7 @@ import { ChangeDetectionStrategy, Component, model, input } from '@angular/core'
             </h2>
             <button (click)="show.set(false)" class="text-slate-500 hover:text-slate-300 transition-colors p-1.5 rounded-lg hover:bg-slate-800 cursor-pointer"
                     [class.scale-110]="uiMode() === 'enhanced'">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clip-rule="evenodd" />
-              </svg>
+              <mat-icon class="w-6 h-6">close</mat-icon>
             </button>
           </div>
 
@@ -40,10 +37,8 @@ import { ChangeDetectionStrategy, Component, model, input } from '@angular/core'
               <!-- Privacy Note -->
               <div class="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/10 flex gap-3 items-start"
                    [class.bg-emerald-500/10]="uiMode() === 'enhanced'" [class.border-emerald-500/30]="uiMode() === 'enhanced'">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5"
-                     [class.w-6]="uiMode() === 'enhanced'" [class.h-6]="uiMode() === 'enhanced'">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                </svg>
+                <mat-icon class="text-emerald-400 shrink-0 mt-0.5 !text-[20px] !w-[20px] !h-[20px]"
+                     [class.!text-[24px]]="uiMode() === 'enhanced'" [class.!w-[24px]]="uiMode() === 'enhanced'" [class.!h-[24px]]="uiMode() === 'enhanced'">verified_user</mat-icon>
                 <div class="space-y-1">
                   <h4 class="font-bold text-emerald-400 uppercase tracking-wider"
                       [class.text-sm]="uiMode() === 'enhanced'"

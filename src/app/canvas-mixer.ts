@@ -1,3 +1,5 @@
+import { APP_CONFIG } from './constants';
+
 export interface CameraOverlayConfig {
   isCameraEnabled: boolean;
   cameraPos: { x: number; y: number };
@@ -23,7 +25,7 @@ export class CanvasMixer {
 
       // 2. Overlay camera circle if enabled and ready
       if (config.isCameraEnabled && camVideoEl && camVideoEl.readyState >= 2) {
-        const windowW = config.windowWidth || 1920;
+        const windowW = config.windowWidth || APP_CONFIG.CONSTRAINTS.MAX_RESOLUTION;
         const windowH = config.windowHeight || 1080;
 
         const scaleX = canvasEle.width / windowW;
