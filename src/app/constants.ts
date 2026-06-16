@@ -1,5 +1,5 @@
 export const APP_CONFIG = {
-  VERSION: 'v1.0.32',
+  VERSION: 'v1.0.33',
   LOCAL_STORAGE_KEYS: {
     QUALITY_PRESET: 'ichi_qualityPreset',
     CAMERA_SIZE: 'ichi_cameraSize',

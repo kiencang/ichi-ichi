@@ -21,13 +21,13 @@ import { MatIconModule } from '@angular/material/icon';
                 <span class="font-normal inline-block ml-1"
                       [class.text-base]="uiMode() === 'enhanced'" [class.text-slate-300]="uiMode() === 'enhanced'" [class.font-semibold]="uiMode() === 'enhanced'"
                       [class.text-sm]="uiMode() !== 'enhanced'" [class.text-slate-400]="uiMode() !== 'enhanced'">
-                  [Dùng tốt nhất trên trình duyệt Chrome hoặc Edge]
+                  [Dùng tốt nhất trên Windows, trình duyệt Chrome hoặc Edge]
                 </span>
               </span>
             </h2>
-            <button (click)="show.set(false)" class="text-slate-500 hover:text-slate-300 transition-colors p-1.5 rounded-lg hover:bg-slate-800 cursor-pointer"
+            <button (click)="show.set(false)" class="text-slate-500 hover:text-slate-300 transition-colors p-1.5 rounded-lg hover:bg-slate-800 cursor-pointer flex items-center justify-center"
                     [class.scale-110]="uiMode() === 'enhanced'">
-              <mat-icon class="w-6 h-6">close</mat-icon>
+              <mat-icon class="!text-[20px] !w-[20px] !h-[20px]">close</mat-icon>
             </button>
           </div>
 
@@ -66,7 +66,7 @@ import { MatIconModule } from '@angular/material/icon';
                 <p class="pl-10 leading-relaxed"
                    [class.text-base]="uiMode() === 'enhanced'" [class.text-slate-200]="uiMode() === 'enhanced'"
                    [class.text-sm]="uiMode() !== 'enhanced'" [class.text-slate-400]="uiMode() !== 'enhanced'">
-                  Để ứng dụng có thể thu được tiếng từ micro hoặc/và video của bạn (nếu cần), vui lòng <strong>Cho phép (Allow)</strong> trình duyệt sử dụng micro, webcam khi được yêu cầu.
+                  Để ứng dụng có thể thu được tiếng từ micro hoặc/và video webcam của bạn (nếu bạn muốn), vui lòng <strong>Cho phép (Allow)</strong> trình duyệt sử dụng micro, webcam khi được yêu cầu.
                 </p>
                 <div class="pl-10">
                   <div class="rounded-xl overflow-hidden border border-slate-700/50 bg-slate-800/30">
@@ -100,7 +100,7 @@ import { MatIconModule } from '@angular/material/icon';
                 <p class="pl-10 leading-relaxed"
                    [class.text-base]="uiMode() === 'enhanced'" [class.text-slate-200]="uiMode() === 'enhanced'"
                    [class.text-sm]="uiMode() !== 'enhanced'" [class.text-slate-400]="uiMode() !== 'enhanced'">
-                  Khi bạn bấm nút bắt đầu quay, trình duyệt web sẽ yêu cầu bạn cấp quyền truy cập. Hãy chọn nội dung bạn muốn chia sẻ (toàn bộ màn hình, hoặc một cửa sổ) và bấm nút <strong>Chia sẻ (Share)</strong>. Ở bước này, bạn cũng có thể bật tính năng chia sẻ âm thanh hệ thống trên hộp thoại để ghi được âm thanh phát ra từ máy tính.
+                  Khi bạn bấm nút bắt đầu quay (nút đỏ giữa màn hình), trình duyệt web sẽ yêu cầu bạn cấp quyền chia sẻ màn hình. Hãy chọn nội dung bạn muốn chia sẻ (toàn bộ màn hình, hoặc một cửa sổ) và bấm nút <strong>Chia sẻ (Share)</strong>. Ở bước này, bạn cũng có thể bật tính năng chia sẻ âm thanh hệ thống trên hộp thoại để ghi được âm thanh phát ra từ máy tính.
                 </p>
                 <div class="pl-10">
                   <div class="rounded-xl overflow-hidden border border-slate-700/50 bg-slate-800/30">
