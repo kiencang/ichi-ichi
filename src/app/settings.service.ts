@@ -11,6 +11,7 @@ export class SettingsService {
   fpsPreset = signal<30 | 60>(APP_CONFIG.DEFAULTS.FPS_PRESET);
   showBorder = signal<boolean>(APP_CONFIG.DEFAULTS.SHOW_BORDER);
   borderColor = signal<string>(APP_CONFIG.DEFAULTS.BORDER_COLOR_DEFAULT);
+  language = signal<'vi' | 'en'>(APP_CONFIG.DEFAULTS.LANGUAGE);
 
   tempQualityPreset = signal<'high' | 'medium' | 'low'>(APP_CONFIG.DEFAULTS.QUALITY_PRESET);
   tempCameraSize = signal<number>(APP_CONFIG.DEFAULTS.CAMERA_SIZE);
@@ -18,6 +19,7 @@ export class SettingsService {
   tempFpsPreset = signal<30 | 60>(APP_CONFIG.DEFAULTS.FPS_PRESET);
   tempShowBorder = signal<boolean>(APP_CONFIG.DEFAULTS.SHOW_BORDER);
   tempBorderColor = signal<string>(APP_CONFIG.DEFAULTS.BORDER_COLOR_DEFAULT);
+  tempLanguage = signal<'vi' | 'en'>(APP_CONFIG.DEFAULTS.LANGUAGE);
 
   constructor() {
     this.loadSettings();
@@ -65,6 +67,12 @@ export class SettingsService {
         this.borderColor.set(APP_CONFIG.DEFAULTS.BORDER_COLOR_DEFAULT);
         this.tempBorderColor.set(APP_CONFIG.DEFAULTS.BORDER_COLOR_DEFAULT);
       }
+
+      const storedLanguage = localStorage.getItem(APP_CONFIG.LOCAL_STORAGE_KEYS.LANGUAGE) as 'vi' | 'en';
+      if (storedLanguage && ['vi', 'en'].includes(storedLanguage)) {
+        this.language.set(storedLanguage);
+        this.tempLanguage.set(storedLanguage);
+      }
     }
   }
 
@@ -75,6 +83,7 @@ export class SettingsService {
     const newFps = this.tempFpsPreset();
     const newShowBorder = this.tempShowBorder();
     const newBorderColor = this.tempBorderColor();
+    const newLanguage = this.tempLanguage();
 
     this.qualityPreset.set(newQuality);
     this.cameraSize.set(newSize);
@@ -82,6 +91,7 @@ export class SettingsService {
     this.fpsPreset.set(newFps);
     this.showBorder.set(newShowBorder);
     this.borderColor.set(newBorderColor);
+    this.language.set(newLanguage);
 
     if (typeof window !== 'undefined') {
       localStorage.setItem(APP_CONFIG.LOCAL_STORAGE_KEYS.QUALITY_PRESET, newQuality);
@@ -90,6 +100,7 @@ export class SettingsService {
       localStorage.setItem(APP_CONFIG.LOCAL_STORAGE_KEYS.FPS_PRESET, newFps.toString());
       localStorage.setItem(APP_CONFIG.LOCAL_STORAGE_KEYS.SHOW_BORDER, newShowBorder.toString());
       localStorage.setItem(APP_CONFIG.LOCAL_STORAGE_KEYS.BORDER_COLOR, newBorderColor);
+      localStorage.setItem(APP_CONFIG.LOCAL_STORAGE_KEYS.LANGUAGE, newLanguage);
     }
   }
 
@@ -100,6 +111,7 @@ export class SettingsService {
     this.fpsPreset.set(APP_CONFIG.DEFAULTS.FPS_PRESET);
     this.showBorder.set(APP_CONFIG.DEFAULTS.SHOW_BORDER);
     this.borderColor.set(APP_CONFIG.DEFAULTS.BORDER_COLOR_DEFAULT);
+    this.language.set(APP_CONFIG.DEFAULTS.LANGUAGE);
     
     this.tempQualityPreset.set(APP_CONFIG.DEFAULTS.QUALITY_PRESET);
     this.tempCameraSize.set(APP_CONFIG.DEFAULTS.CAMERA_SIZE);
@@ -107,6 +119,7 @@ export class SettingsService {
     this.tempFpsPreset.set(APP_CONFIG.DEFAULTS.FPS_PRESET);
     this.tempShowBorder.set(APP_CONFIG.DEFAULTS.SHOW_BORDER);
     this.tempBorderColor.set(APP_CONFIG.DEFAULTS.BORDER_COLOR_DEFAULT);
+    this.tempLanguage.set(APP_CONFIG.DEFAULTS.LANGUAGE);
 
     if (typeof window !== 'undefined') {
       localStorage.removeItem(APP_CONFIG.LOCAL_STORAGE_KEYS.QUALITY_PRESET);
@@ -115,6 +128,7 @@ export class SettingsService {
       localStorage.removeItem(APP_CONFIG.LOCAL_STORAGE_KEYS.FPS_PRESET);
       localStorage.removeItem(APP_CONFIG.LOCAL_STORAGE_KEYS.SHOW_BORDER);
       localStorage.removeItem(APP_CONFIG.LOCAL_STORAGE_KEYS.BORDER_COLOR);
+      localStorage.removeItem(APP_CONFIG.LOCAL_STORAGE_KEYS.LANGUAGE);
     }
   }
 
@@ -125,5 +139,6 @@ export class SettingsService {
     this.tempFpsPreset.set(this.fpsPreset());
     this.tempShowBorder.set(this.showBorder());
     this.tempBorderColor.set(this.borderColor());
+    this.tempLanguage.set(this.language());
   }
 }

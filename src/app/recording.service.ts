@@ -2,8 +2,9 @@ import { Injectable, signal, inject } from '@angular/core';
 import { DeviceDetector } from './device-detector';
 import { CanvasMixer } from './canvas-mixer';
 import { ToastService } from './toast.service';
-import { MESSAGES, APP_CONFIG } from './constants';
+import { APP_CONFIG } from './constants';
 import ysFixWebmDuration from 'fix-webm-duration';
+import { LanguageService } from './language.service';
 
 export interface RecordConfig {
   isCameraEnabled: boolean;
@@ -24,6 +25,7 @@ export interface RecordConfig {
 export class RecordingService {
   private deviceDetector = inject(DeviceDetector);
   private toastService = inject(ToastService);
+  private lang = inject(LanguageService);
 
   isRecording = signal(false);
   isCountingDown = signal(false);
@@ -97,7 +99,7 @@ export class RecordingService {
             this.deviceDetector.micPermission.set('denied');
         }
         this.deviceDetector.checkMicStatus();
-        this.errorMessage.set(MESSAGES.ERRORS.MIC_NOT_FOUND);
+        this.errorMessage.set(this.lang.translations().MSG_MIC_NOT_FOUND);
         setTimeout(() => this.errorMessage.set(''), 5000);
       }
 
@@ -314,9 +316,9 @@ export class RecordingService {
     } catch (err) {
       const errorName = (err instanceof Error) ? err.name : '';
       if (errorName === 'NotAllowedError') {
-        this.errorMessage.set(MESSAGES.ERRORS.SCREEN_SHARE_DENIED);
+        this.errorMessage.set(this.lang.translations().MSG_SCREEN_SHARE_DENIED);
       } else {
-        this.errorMessage.set(MESSAGES.ERRORS.GENERAL_RECORD_ERROR);
+        this.errorMessage.set(this.lang.translations().MSG_GENERAL_RECORD_ERROR);
       }
       setTimeout(() => this.errorMessage.set(''), 8000);
       this.cleanupStreams();
@@ -403,7 +405,7 @@ export class RecordingService {
           setTimeout(() => {
               window.URL.revokeObjectURL(url);
               document.body.removeChild(a);
-              this.toastService.success(MESSAGES.SUCCESS.VIDEO_SAVED);
+              this.toastService.success(this.lang.translations().MSG_VIDEO_SAVED);
           }, 100);
           this.recordedChunks = [];
       };

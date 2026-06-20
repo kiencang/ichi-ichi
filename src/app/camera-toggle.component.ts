@@ -1,12 +1,13 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { LanguageService } from './language.service';
 
 @Component({
   selector: 'app-camera-toggle',
   standalone: true,
   imports: [MatIconModule],
   template: `
-    <div class="flex flex-col items-center space-y-3 pointer-events-none select-none w-full">
+    <div class="flex flex-col items-center space-y-3 pointer-events-none select-none w-full animate-none">
       <!-- Camera Toggle -->
       <div 
          class="group flex items-center gap-3 backdrop-blur-md border pl-4 pr-3 py-2 rounded-full pointer-events-auto transition-all duration-300 shadow-lg"
@@ -42,7 +43,7 @@ import { MatIconModule } from '@angular/material/icon';
                [class.text-slate-400]="uiMode() !== 'enhanced' && !isCameraEnabled()"
                [class.text-slate-300]="uiMode() === 'enhanced' && !isCameraEnabled()"
              >
-              CAMERA
+              {{ lang.translations().CAMERA }}
             </span>
         </div>
         
@@ -78,7 +79,7 @@ import { MatIconModule } from '@angular/material/icon';
            : 'flex items-center space-x-1.5 text-orange-400 bg-orange-500/10 rounded-full font-medium border border-orange-500/20 px-3 py-1.5 text-xs transition-all duration-300'"
          >
            <mat-icon class="!text-[16px] !w-[16px] !h-[16px]">warning</mat-icon>
-           <span>Micro không khả dụng hoặc bị chặn</span>
+           <span>{{ lang.translations().MIC_UNAVAILABLE }}</span>
          </div>
         </div>
       }
@@ -108,4 +109,6 @@ export class CameraToggleComponent {
   recordingAttempted = input.required<boolean>();
   
   toggleCamera = output<void>();
+
+  lang = inject(LanguageService);
 }

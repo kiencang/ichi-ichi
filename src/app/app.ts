@@ -7,11 +7,12 @@ import { SettingsService } from './settings.service';
 import { RecordingService } from './recording.service';
 import { DraggableCameraDirective } from './draggable-camera.directive';
 import { ToastService } from './toast.service';
-import { MESSAGES, APP_CONFIG } from './constants';
+import { APP_CONFIG } from './constants';
 import { FooterComponent } from './footer.component';
 import { CountdownOverlayComponent } from './countdown-overlay.component';
 import { RecordButtonComponent } from './record-button.component';
 import { CameraToggleComponent } from './camera-toggle.component';
+import { LanguageService } from './language.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,6 +39,7 @@ export class App implements OnDestroy, OnInit {
   private settingsService = inject(SettingsService);
   private recordingService = inject(RecordingService);
   public toastService = inject(ToastService);
+  public lang = inject(LanguageService);
 
   isCameraEnabled = signal(false);
   cameraStream = signal<MediaStream | null>(null);
@@ -69,6 +71,7 @@ export class App implements OnDestroy, OnInit {
   tempShowBorder = this.settingsService.tempShowBorder;
   borderColor = this.settingsService.borderColor;
   tempBorderColor = this.settingsService.tempBorderColor;
+  tempLanguage = this.settingsService.tempLanguage;
   showSettingsModal = signal(false);
 
   hasMicDevice = this.deviceDetector.hasMicDevice;
@@ -101,13 +104,13 @@ export class App implements OnDestroy, OnInit {
   saveSettings() {
       this.settingsService.saveSettings();
       this.showSettingsModal.set(false);
-      this.toastService.success(MESSAGES.SUCCESS.SETTINGS_SAVED);
+      this.toastService.success(this.lang.translations().MSG_SETTINGS_SAVED);
   }
 
   resetToDefaultSettings() {
       this.settingsService.resetToDefault();
       this.showSettingsModal.set(false);
-      this.toastService.success(MESSAGES.SUCCESS.SETTINGS_RESET);
+      this.toastService.success(this.lang.translations().MSG_SETTINGS_RESET);
   }
 
   updateCameraSize(event: Event) {

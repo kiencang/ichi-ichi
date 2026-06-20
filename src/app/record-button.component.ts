@@ -1,4 +1,5 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, inject } from '@angular/core';
+import { LanguageService } from './language.service';
 
 @Component({
   selector: 'app-record-button',
@@ -7,7 +8,7 @@ import { Component, input, output } from '@angular/core';
     <button 
       (click)="toggleRecord.emit()"
       class="group relative flex items-center justify-center w-36 h-36 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-red-500/50 cursor-pointer"
-      [attr.title]="isRecording() ? 'Dừng quay' : 'Click để bắt đầu quay màn hình'"
+      [attr.title]="isRecording() ? lang.translations().STOP_RECORDING_TITLE : lang.translations().START_RECORDING_TITLE"
     >
       <!-- Old / Worn out Outer Background -->
       <div 
@@ -81,4 +82,6 @@ import { Component, input, output } from '@angular/core';
 export class RecordButtonComponent {
   isRecording = input.required<boolean>();
   toggleRecord = output<void>();
+
+  lang = inject(LanguageService);
 }

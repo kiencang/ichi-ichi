@@ -1,5 +1,5 @@
 export const APP_CONFIG = {
-  VERSION: 'v1.0.35',
+  VERSION: 'v1.0.36',
   LOCAL_STORAGE_KEYS: {
     QUALITY_PRESET: 'ichi_qualityPreset',
     CAMERA_SIZE: 'ichi_cameraSize',
@@ -7,6 +7,7 @@ export const APP_CONFIG = {
     FPS_PRESET: 'ichi_fpsPreset',
     SHOW_BORDER: 'ichi_showBorder',
     BORDER_COLOR: 'ichi_borderColor',
+    LANGUAGE: 'ichi_language',
   },
   DEFAULTS: {
     CAMERA_SIZE: 120,
@@ -16,6 +17,7 @@ export const APP_CONFIG = {
     SHOW_BORDER: false,
     BORDER_COLOR_DEFAULT: '#10b981',
     BORDER_COLOR_ENHANCED: '#f59e0b',
+    LANGUAGE: 'vi' as const,
   },
   CONSTRAINTS: {
     MAX_RESOLUTION: 1920,

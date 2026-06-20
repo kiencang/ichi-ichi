@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, model, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model, output, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { LanguageService } from './language.service';
 
 @Component({
   selector: 'app-settings-modal',
@@ -9,8 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
     @if (show()) {
       <div (click)="$event.target === $event.currentTarget && show.set(false)" class="fixed inset-0 z-[110] flex items-center justify-center bg-transparent transition-all p-4 cursor-pointer">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl w-full overflow-hidden flex flex-col transition-all duration-300 cursor-default"
-             [class.max-w-4xl]="tempUiMode() === 'enhanced'"
-             [class.max-w-3xl]="tempUiMode() !== 'enhanced'">
+             [class.max-w-6xl]="tempUiMode() === 'enhanced'"
+             [class.max-w-5xl]="tempUiMode() !== 'enhanced'">
           
           <!-- Header -->
           <div class="px-6 py-4 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
@@ -22,7 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
                         [class.!text-[20px]]="tempUiMode() !== 'enhanced'" [class.!w-[20px]]="tempUiMode() !== 'enhanced'" [class.!h-[20px]]="tempUiMode() !== 'enhanced'">
                 settings
               </mat-icon>
-              Cài đặt chất lượng & camera
+              {{ lang.translations().SETTINGS_TITLE }}
             </h2>
             <button (click)="show.set(false)" class="text-slate-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-slate-800 cursor-pointer flex items-center justify-center"
                     [class.scale-110]="tempUiMode() === 'enhanced'">
@@ -32,9 +33,9 @@ import { MatIconModule } from '@angular/material/icon';
           
           <!-- Content -->
           <div class="px-6 py-5 overflow-y-auto w-full flex-1">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
               
-              <!-- Left Column: Quality & Border Settings -->
+              <!-- Column 1: Chất lượng ghi hình -->
               <div class="space-y-4">
                 <!-- Quality Settings Card -->
                 <div class="bg-slate-950/50 border border-slate-800/80 rounded-xl p-4 md:p-5 space-y-4 shadow-inner">
@@ -44,7 +45,7 @@ import { MatIconModule } from '@angular/material/icon';
                     <span class="w-1.5 h-1.5 rounded-full animate-[pulse_2s_infinite]"
                           [class.bg-emerald-500]="tempUiMode() !== 'enhanced'"
                           [class.bg-amber-500]="tempUiMode() === 'enhanced'"></span>
-                    Chất lượng ghi hình
+                    {{ lang.translations().COL_QUALITY_TITLE }}
                   </h3>
                   
                   <div class="space-y-3">
@@ -53,15 +54,19 @@ import { MatIconModule } from '@angular/material/icon';
                         [class.bg-slate-850/40]="tempQualityPreset() !== 'high'" [class.border-slate-800/70]="tempQualityPreset() !== 'high'"
                         [class.hover:border-slate-700]="tempQualityPreset() !== 'high'">
                       <div>
-                        <div class="font-medium text-slate-200 border-none select-none"
-                             [class.text-base]="tempUiMode() === 'enhanced'" [class.text-sm]="tempUiMode() !== 'enhanced'" [class.font-semibold]="tempUiMode() === 'enhanced'">Cao</div>
-                        <div class="mt-1"
+                        <div class="font-medium text-slate-200 border-none select-none text-left"
+                             [class.text-base]="tempUiMode() === 'enhanced'" [class.text-sm]="tempUiMode() !== 'enhanced'" [class.font-semibold]="tempUiMode() === 'enhanced'">
+                          {{ lang.translations().QUALITY_HIGH }}
+                        </div>
+                        <div class="mt-1 text-left"
                              [class.text-sm]="tempUiMode() === 'enhanced'" [class.text-slate-300]="tempUiMode() === 'enhanced'"
-                             [class.text-xs]="tempUiMode() !== 'enhanced'" [class.text-slate-400]="tempUiMode() !== 'enhanced'">Video: 8 Mbps, Audio: 320 kbps</div>
+                             [class.text-xs]="tempUiMode() !== 'enhanced'" [class.text-slate-400]="tempUiMode() !== 'enhanced'">
+                          {{ lang.translations().BITRATE_HIGH_DETAIL }}
+                        </div>
                       </div>
                       <input type="radio" name="quality" value="high" [checked]="tempQualityPreset() === 'high'" class="sr-only pointer-events-none">
                       @if (tempQualityPreset() === 'high') {
-                        <div class="rounded-full border-slate-900"
+                        <div class="rounded-full border-slate-900 shrink-0"
                              [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
                              [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
                              [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
@@ -78,15 +83,19 @@ import { MatIconModule } from '@angular/material/icon';
                         [class.bg-slate-850/40]="tempQualityPreset() !== 'medium'" [class.border-slate-800/70]="tempQualityPreset() !== 'medium'"
                         [class.hover:border-slate-700]="tempQualityPreset() !== 'medium'">
                       <div>
-                        <div class="font-medium text-slate-200 border-none select-none"
-                             [class.text-base]="tempUiMode() === 'enhanced'" [class.text-sm]="tempUiMode() !== 'enhanced'" [class.font-semibold]="tempUiMode() === 'enhanced'">Trung bình (Mặc định)</div>
-                        <div class="mt-1"
+                        <div class="font-medium text-slate-200 border-none select-none text-left"
+                             [class.text-base]="tempUiMode() === 'enhanced'" [class.text-sm]="tempUiMode() !== 'enhanced'" [class.font-semibold]="tempUiMode() === 'enhanced'">
+                          {{ lang.translations().QUALITY_MEDIUM }}
+                        </div>
+                        <div class="mt-1 text-left"
                              [class.text-sm]="tempUiMode() === 'enhanced'" [class.text-slate-300]="tempUiMode() === 'enhanced'"
-                             [class.text-xs]="tempUiMode() !== 'enhanced'" [class.text-slate-400]="tempUiMode() !== 'enhanced'">Video: 4 Mbps, Audio: 192 kbps</div>
+                             [class.text-xs]="tempUiMode() !== 'enhanced'" [class.text-slate-400]="tempUiMode() !== 'enhanced'">
+                          {{ lang.translations().BITRATE_MEDIUM_DETAIL }}
+                        </div>
                       </div>
                       <input type="radio" name="quality" value="medium" [checked]="tempQualityPreset() === 'medium'" class="sr-only pointer-events-none">
                       @if (tempQualityPreset() === 'medium') {
-                        <div class="rounded-full border-slate-900"
+                        <div class="rounded-full border-slate-900 shrink-0"
                              [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
                              [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
                              [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
@@ -103,15 +112,19 @@ import { MatIconModule } from '@angular/material/icon';
                         [class.bg-slate-850/40]="tempQualityPreset() !== 'low'" [class.border-slate-800/70]="tempQualityPreset() !== 'low'"
                         [class.hover:border-slate-700]="tempQualityPreset() !== 'low'">
                       <div>
-                         <div class="font-medium text-slate-200 border-none select-none"
-                              [class.text-base]="tempUiMode() === 'enhanced'" [class.text-sm]="tempUiMode() !== 'enhanced'" [class.font-semibold]="tempUiMode() === 'enhanced'">Thấp</div>
-                        <div class="mt-1"
+                         <div class="font-medium text-slate-200 border-none select-none text-left"
+                              [class.text-base]="tempUiMode() === 'enhanced'" [class.text-sm]="tempUiMode() !== 'enhanced'" [class.font-semibold]="tempUiMode() === 'enhanced'">
+                           {{ lang.translations().QUALITY_LOW }}
+                         </div>
+                        <div class="mt-1 text-left"
                              [class.text-sm]="tempUiMode() === 'enhanced'" [class.text-slate-300]="tempUiMode() === 'enhanced'"
-                             [class.text-xs]="tempUiMode() !== 'enhanced'" [class.text-slate-400]="tempUiMode() !== 'enhanced'">Video: 2 Mbps, Audio: 128 kbps</div>
+                             [class.text-xs]="tempUiMode() !== 'enhanced'" [class.text-slate-400]="tempUiMode() !== 'enhanced'">
+                          {{ lang.translations().BITRATE_LOW_DETAIL }}
+                        </div>
                       </div>
                       <input type="radio" name="quality" value="low" [checked]="tempQualityPreset() === 'low'" class="sr-only pointer-events-none">
                       @if (tempQualityPreset() === 'low') {
-                        <div class="rounded-full border-slate-900"
+                        <div class="rounded-full border-slate-900 shrink-0"
                              [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
                              [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
                              [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
@@ -123,8 +136,31 @@ import { MatIconModule } from '@angular/material/icon';
                       }
                     </div>
                   </div>
-                </div>
 
+                  <!-- Dynamic Helper Info box based on selected Quality -->
+                  <div class="p-3 bg-slate-900/50 rounded-lg text-[#34d399] border border-emerald-500/10 text-left select-none"
+                       [class.text-[#f59e0b]]="tempUiMode() === 'enhanced'" [class.border-amber-500/20]="tempUiMode() === 'enhanced'">
+                    <p class="font-medium flex items-start gap-1 w-full leading-normal"
+                       [class.text-sm]="tempUiMode() === 'enhanced'"
+                       [class.text-xs]="tempUiMode() !== 'enhanced'"
+                    >
+                      <mat-icon class="!text-[16px] !w-[16px] !h-[16px] shrink-0 mt-0.5">info</mat-icon>
+                      <span>
+                        @if (tempQualityPreset() === 'high') {
+                          {{ lang.translations().QUALITY_HIGH_DESC }}
+                        } @else if (tempQualityPreset() === 'medium') {
+                          {{ lang.translations().QUALITY_MEDIUM_DESC }}
+                        } @else {
+                          {{ lang.translations().QUALITY_LOW_DESC }}
+                        }
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Column 2: Tốc độ khung hình & Cài đặt viền Webcam -->
+              <div class="space-y-4">
                 <!-- Tốc độ khung hình (FPS) Option Card -->
                 <div class="bg-slate-950/50 border border-slate-800/80 rounded-xl p-4 md:p-5 space-y-3.5 shadow-inner">
                   <h3 class="font-medium text-slate-200 select-none pb-2 border-b border-slate-800/50 flex items-center gap-2"
@@ -133,8 +169,9 @@ import { MatIconModule } from '@angular/material/icon';
                     <span class="w-1.5 h-1.5 rounded-full animate-[pulse_2s_infinite]"
                           [class.bg-emerald-500]="tempUiMode() !== 'enhanced'"
                           [class.bg-amber-500]="tempUiMode() === 'enhanced'"></span>
-                    Tốc độ khung hình (FPS)
+                    {{ lang.translations().COL_FPS_TITLE }}
                   </h3>
+                  
                   <div class="grid grid-cols-2 gap-3">
                     <div (click)="setFpsPreset(30)" class="group relative flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors"
                         [class.bg-slate-800]="tempFpsPreset() === 30" [class.border-emerald-500]="tempUiMode() !== 'enhanced' && tempFpsPreset() === 30" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempFpsPreset() === 30"
@@ -143,12 +180,12 @@ import { MatIconModule } from '@angular/material/icon';
                       
                       <!-- Elegant Tip Tooltip -->
                       <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 text-center scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-200 z-50 bg-slate-950/95 border border-slate-700/50 px-2.5 py-1.5 text-[11px] leading-normal text-slate-200 rounded-lg shadow-xl backdrop-blur-md selection:bg-transparent">
-                        Đủ cho phần lớn trường hợp & phù hợp cho máy cấu hình trung bình
+                        {{ lang.translations().FPS_SMOOTH_DESC }}
                         <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-950/95"></div>
                       </div>
 
                       <div>
-                        <div class="font-medium text-slate-200 select-none border-none pb-0"
+                        <div class="font-medium text-slate-200 select-none border-none pb-0 text-left"
                              [class.text-base]="tempUiMode() === 'enhanced'"
                              [class.text-sm]="tempUiMode() !== 'enhanced'">30 FPS</div>
                       </div>
@@ -173,90 +210,18 @@ import { MatIconModule } from '@angular/material/icon';
                       
                       <!-- Elegant Tip Tooltip -->
                       <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 text-center scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-200 z-50 bg-slate-950/95 border border-slate-700/50 px-2.5 py-1.5 text-[11px] leading-normal text-slate-200 rounded-lg shadow-xl backdrop-blur-md selection:bg-transparent">
-                        Khi video có chuyển động nhanh & cấu hình máy của bạn cao
+                        {{ lang.translations().FPS_ULTRA_DESC }}
                         <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-950/95"></div>
                       </div>
 
                       <div>
-                        <div class="font-medium text-slate-200 select-none border-none pb-0"
+                        <div class="font-medium text-slate-200 select-none border-none pb-0 text-left"
                              [class.text-base]="tempUiMode() === 'enhanced'"
                              [class.text-sm]="tempUiMode() !== 'enhanced'">60 FPS</div>
                       </div>
                       <input type="radio" name="fpsPreset" value="60" [checked]="tempFpsPreset() === 60" class="sr-only pointer-events-none">
                       @if (tempFpsPreset() === 60) {
                         <div class="rounded-full border-slate-900 shrink-0 select-none"
-                             [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
-                             [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
-                             [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
-                             [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'" [class.border-[3px]]="tempUiMode() !== 'enhanced'"></div>
-                      } @else {
-                        <div class="rounded-full border border-slate-600 col-span-1 shrink-0 select-none"
-                             [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'"
-                             [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'"></div>
-                      }
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Right Column: Interface & FPS & camera size slider -->
-              <div class="space-y-4">
-                <!-- Interface Mode Option Card -->
-                <div class="bg-slate-950/50 border border-slate-800/80 rounded-xl p-4 md:p-5 space-y-3.5 shadow-inner">
-                  <h3 class="font-medium text-slate-200 select-none pb-2 border-b border-slate-800/50 flex items-center gap-2"
-                      [class.text-base]="tempUiMode() === 'enhanced'" [class.font-semibold]="tempUiMode() === 'enhanced'"
-                      [class.text-sm]="tempUiMode() !== 'enhanced'">
-                    <span class="w-1.5 h-1.5 rounded-full animate-[pulse_2s_infinite]"
-                          [class.bg-emerald-500]="tempUiMode() !== 'enhanced'"
-                          [class.bg-amber-500]="tempUiMode() === 'enhanced'"></span>
-                    Chế độ giao diện
-                  </h3>
-                  <div class="grid grid-cols-2 gap-3">
-                    <div (click)="setUiMode('default')" class="flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors"
-                        [class.bg-slate-800]="tempUiMode() === 'default'" [class.border-emerald-500]="tempUiMode() === 'default'"
-                        [class.bg-slate-850/40]="tempUiMode() !== 'default'" [class.border-slate-800/70]="tempUiMode() !== 'default'"
-                        [class.hover:border-slate-600]="tempUiMode() !== 'default'">
-                      <div>
-                        <div class="font-medium text-slate-200 select-none"
-                             [class.text-base]="tempUiMode() === 'enhanced'"
-                             [class.text-sm]="tempUiMode() !== 'enhanced'">Mặc định</div>
-                      </div>
-                      <input type="radio" name="uiMode" value="default" [checked]="tempUiMode() === 'default'" class="sr-only pointer-events-none">
-                      @if (tempUiMode() === 'default') {
-                        <div class="rounded-full border-slate-900"
-                             [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
-                             [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
-                             [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
-                             [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'" [class.border-[3px]]="tempUiMode() !== 'enhanced'"></div>
-                      } @else {
-                        <div class="rounded-full border border-slate-600 col-span-1 shrink-0 select-none"
-                             [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'"
-                             [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'"></div>
-                      }
-                    </div>
-
-                    <div (click)="setUiMode('enhanced')" class="group relative flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors"
-                        [class.bg-slate-800]="tempUiMode() === 'enhanced'" [class.border-amber-500]="tempUiMode() === 'enhanced'"
-                        [class.bg-slate-850/40]="tempUiMode() !== 'enhanced'" [class.border-slate-800/70]="tempUiMode() !== 'enhanced'"
-                        [class.hover:border-slate-650]="tempUiMode() !== 'enhanced'"
-                        [class.hover:border-slate-600]="tempUiMode() !== 'enhanced'">
-                      
-                      <!-- Elegant Tailwind Tooltip -->
-                      <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 text-center scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-200 z-50 bg-slate-950/95 border border-slate-700/50 px-2.5 py-1.5 text-[11px] leading-normal text-slate-200 rounded-lg shadow-xl backdrop-blur-md selection:bg-transparent">
-                        Dành cho người cao tuổi hoặc gặp vấn đề về thị lực.
-                        <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-950/95"></div>
-                      </div>
-
-                      <div>
-                        <div class="font-medium text-slate-200 select-none flex items-center gap-1.5"
-                             [class.text-base]="tempUiMode() === 'enhanced'"
-                             [class.text-sm]="tempUiMode() !== 'enhanced'">
-                          <span>Tăng cường</span>
-                        </div>
-                      </div>
-                      <input type="radio" name="uiMode" value="enhanced" [checked]="tempUiMode() === 'enhanced'" class="sr-only pointer-events-none">
-                      @if (tempUiMode() === 'enhanced') {
-                        <div class="rounded-full border-slate-900"
                              [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
                              [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
                              [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
@@ -278,7 +243,7 @@ import { MatIconModule } from '@angular/material/icon';
                     <span class="w-1.5 h-1.5 rounded-full animate-[pulse_2s_infinite]"
                           [class.bg-emerald-500]="tempUiMode() !== 'enhanced'"
                           [class.bg-amber-500]="tempUiMode() === 'enhanced'"></span>
-                    Cài đặt viền Camera
+                    {{ lang.translations().COL_BORDER_TITLE }}
                   </h3>
 
                   <!-- Checkbox -->
@@ -290,17 +255,17 @@ import { MatIconModule } from '@angular/material/icon';
                       [class.text-emerald-500]="tempUiMode() !== 'enhanced' && tempShowBorder()"
                       [class.text-amber-500]="tempUiMode() === 'enhanced' && tempShowBorder()"
                     >
-                    <span class="font-medium animate-none"
+                    <span class="font-medium animate-none text-left leading-normal"
                           [class.text-base]="tempUiMode() === 'enhanced'"
-                          [class.text-sm]="tempUiMode() !== 'enhanced'">Hiển thị viền tròn quanh camera</span>
+                          [class.text-sm]="tempUiMode() !== 'enhanced'">{{ lang.translations().BORDER_ENABLE }}</span>
                   </div>
 
                   <!-- Color Selection (only shown if checked) -->
                   @if (tempShowBorder()) {
                     <div class="space-y-3 pt-1">
-                      <div class="text-slate-400 select-none font-medium"
+                      <div class="text-slate-400 select-none font-medium text-left"
                            [class.text-sm]="tempUiMode() === 'enhanced'"
-                           [class.text-xs]="tempUiMode() !== 'enhanced'">Màu sắc của viền:</div>
+                           [class.text-xs]="tempUiMode() !== 'enhanced'">{{ lang.translations().BORDER_COLOR }}:</div>
                       
                       <div class="grid grid-cols-7 gap-2">
                         @for (color of borderColors; track color.value) {
@@ -324,7 +289,7 @@ import { MatIconModule } from '@angular/material/icon';
                             </button>
                             <!-- Tooltip -->
                             <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max max-w-xs scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-150 z-50 bg-slate-950 border border-slate-800 px-2.5 py-1 text-[11px] text-slate-200 rounded shadow-md select-none leading-normal">
-                              {{ color.name }}
+                              {{ getTranslatedColorName(color.name) }}
                             </div>
                           </div>
                         }
@@ -332,8 +297,79 @@ import { MatIconModule } from '@angular/material/icon';
                     </div>
                   }
                 </div>
+              </div>
 
-                <!-- Camera Size Slider (Webcam) - in the right column -->
+              <!-- Column 3: Chế độ giao diện & Kích cỡ Webcam -->
+              <div class="space-y-4">
+                <!-- Interface Mode Option Card -->
+                <div class="bg-slate-950/50 border border-slate-800/80 rounded-xl p-4 md:p-5 space-y-3.5 shadow-inner">
+                  <h3 class="font-medium text-slate-200 select-none pb-2 border-b border-slate-800/50 flex items-center gap-2"
+                      [class.text-base]="tempUiMode() === 'enhanced'" [class.font-semibold]="tempUiMode() === 'enhanced'"
+                      [class.text-sm]="tempUiMode() !== 'enhanced'">
+                    <span class="w-1.5 h-1.5 rounded-full animate-[pulse_2s_infinite]"
+                          [class.bg-emerald-500]="tempUiMode() !== 'enhanced'"
+                          [class.bg-amber-500]="tempUiMode() === 'enhanced'"></span>
+                    {{ lang.translations().COL_UI_TITLE }}
+                  </h3>
+                  <div class="grid grid-cols-2 gap-3">
+                    <div (click)="setUiMode('default')" class="flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors"
+                        [class.bg-slate-800]="tempUiMode() === 'default'" [class.border-emerald-500]="tempUiMode() === 'default'"
+                        [class.bg-slate-850/40]="tempUiMode() !== 'default'" [class.border-slate-800/70]="tempUiMode() !== 'default'"
+                        [class.hover:border-slate-600]="tempUiMode() !== 'default'">
+                      <div>
+                        <div class="font-medium text-slate-200 select-none text-left"
+                             [class.text-base]="tempUiMode() === 'enhanced'"
+                             [class.text-sm]="tempUiMode() !== 'enhanced'">{{ lang.translations().UI_DEFAULT }}</div>
+                      </div>
+                      <input type="radio" name="uiMode" value="default" [checked]="tempUiMode() === 'default'" class="sr-only pointer-events-none">
+                      @if (tempUiMode() === 'default') {
+                        <div class="rounded-full border-slate-900"
+                             [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
+                             [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
+                             [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
+                             [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'" [class.border-[3px]]="tempUiMode() !== 'enhanced'"></div>
+                      } @else {
+                        <div class="rounded-full border border-slate-600 col-span-1 shrink-0 select-none"
+                             [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'"
+                             [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'"></div>
+                      }
+                    </div>
+
+                    <div (click)="setUiMode('enhanced')" class="group relative flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors"
+                        [class.bg-slate-800]="tempUiMode() === 'enhanced'" [class.border-amber-500]="tempUiMode() === 'enhanced'"
+                        [class.bg-slate-850/40]="tempUiMode() !== 'enhanced'" [class.border-slate-800/70]="tempUiMode() !== 'enhanced'"
+                        [class.hover:border-slate-600]="tempUiMode() !== 'enhanced'">
+                      
+                      <!-- Elegant Tailwind Tooltip -->
+                      <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 text-center scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-200 z-50 bg-slate-950/95 border border-slate-700/50 px-2.5 py-1.5 text-[11px] leading-normal text-slate-200 rounded-lg shadow-xl backdrop-blur-md selection:bg-transparent">
+                        {{ lang.translations().UI_TOOLTIP }}
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-950/95"></div>
+                      </div>
+
+                      <div>
+                        <div class="font-medium text-slate-200 select-none flex items-center gap-1.5"
+                             [class.text-base]="tempUiMode() === 'enhanced'"
+                             [class.text-sm]="tempUiMode() !== 'enhanced'">
+                          <span>{{ lang.translations().UI_ENHANCED }}</span>
+                        </div>
+                      </div>
+                      <input type="radio" name="uiMode" value="enhanced" [checked]="tempUiMode() === 'enhanced'" class="sr-only pointer-events-none">
+                      @if (tempUiMode() === 'enhanced') {
+                        <div class="rounded-full border-slate-900 shrink-0"
+                             [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
+                             [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
+                             [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
+                             [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'" [class.border-[3px]]="tempUiMode() !== 'enhanced'"></div>
+                      } @else {
+                        <div class="rounded-full border border-slate-600 col-span-1 shrink-0 select-none"
+                             [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'"
+                             [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'"></div>
+                      }
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Camera Size (Webcam) Card -->
                 <div class="bg-slate-950/50 border border-slate-800/80 rounded-xl p-4 md:p-5 space-y-3.5 shadow-inner">
                   <h3 class="relative font-medium text-slate-200 mb-1 select-none pb-2 border-b border-slate-800/50 flex items-center justify-between gap-2"
                       [class.text-base]="tempUiMode() === 'enhanced'" [class.font-semibold]="tempUiMode() === 'enhanced'"
@@ -342,15 +378,15 @@ import { MatIconModule } from '@angular/material/icon';
                       <span class="w-1.5 h-1.5 rounded-full animate-[pulse_2s_infinite]"
                             [class.bg-emerald-500]="tempUiMode() !== 'enhanced'"
                             [class.bg-amber-500]="tempUiMode() === 'enhanced'"></span>
-                      Kích cỡ Video (Webcam)
+                      {{ lang.translations().COL_WEBCAM_SIZE_TITLE }}
                     </div>
-                    <span class="font-mono font-bold text-xs px-2 py-0.5 rounded-md bg-slate-900 border border-slate-800 shadow-sm"
+                    <span class="font-mono font-bold text-xs px-2 py-0.5 rounded-md bg-slate-900 border border-slate-800 shadow-sm animate-none"
                          [class.text-emerald-400]="tempUiMode() !== 'enhanced'"
                          [class.text-amber-400]="tempUiMode() === 'enhanced'"
                          [class.text-sm]="tempUiMode() === 'enhanced'">{{ tempCameraSize() }}px</span>
                   </h3>
                   <div class="flex items-center gap-4 pt-1">
-                    <span class="font-mono w-12 text-slate-400"
+                    <span class="font-mono w-12 text-slate-400 text-left select-none"
                           [class.text-sm]="tempUiMode() === 'enhanced'" [class.text-slate-300]="tempUiMode() === 'enhanced'"
                           [class.text-xs]="tempUiMode() !== 'enhanced'">120px</span>
                     <input 
@@ -364,9 +400,68 @@ import { MatIconModule } from '@angular/material/icon';
                        [class.accent-emerald-500]="tempUiMode() !== 'enhanced'" [class.focus:ring-emerald-500/50]="tempUiMode() !== 'enhanced'"
                        [class.accent-amber-500]="tempUiMode() === 'enhanced'" [class.focus:ring-amber-500/50]="tempUiMode() === 'enhanced'"
                     >
-                    <span class="font-mono w-12 text-right text-slate-400"
+                    <span class="font-mono w-12 text-right text-slate-400 select-none"
                           [class.text-sm]="tempUiMode() === 'enhanced'" [class.text-slate-300]="tempUiMode() === 'enhanced'"
                           [class.text-xs]="tempUiMode() !== 'enhanced'">360px</span>
+                  </div>
+                </div>
+
+                <!-- Language Selection Card -->
+                <div class="bg-slate-950/50 border border-slate-800/80 rounded-xl p-4 md:p-5 space-y-3.5 shadow-inner">
+                  <h3 class="font-medium text-slate-200 select-none pb-2 border-b border-slate-800/50 flex items-center gap-2"
+                      [class.text-base]="tempUiMode() === 'enhanced'" [class.font-semibold]="tempUiMode() === 'enhanced'"
+                      [class.text-sm]="tempUiMode() !== 'enhanced'">
+                    <span class="w-1.5 h-1.5 rounded-full animate-[pulse_2s_infinite]"
+                          [class.bg-emerald-500]="tempUiMode() !== 'enhanced'"
+                          [class.bg-amber-500]="tempUiMode() === 'enhanced'"></span>
+                    {{ lang.translations().COL_LANG_TITLE }}
+                  </h3>
+                  <div class="grid grid-cols-2 gap-3">
+                    <div (click)="setLanguage('vi')" class="flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors"
+                        [class.bg-slate-800]="tempLanguage() === 'vi'" [class.border-emerald-500]="tempUiMode() !== 'enhanced' && tempLanguage() === 'vi'" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempLanguage() === 'vi'"
+                        [class.bg-slate-850/40]="tempLanguage() !== 'vi'" [class.border-slate-800/70]="tempLanguage() !== 'vi'"
+                        [class.hover:border-slate-650]="tempLanguage() !== 'vi'">
+                      <div>
+                        <div class="font-medium text-slate-200 select-none text-left"
+                             [class.text-base]="tempUiMode() === 'enhanced'"
+                             [class.text-sm]="tempUiMode() !== 'enhanced'">{{ lang.translations().LANG_VI }}</div>
+                      </div>
+                      <input type="radio" name="language" value="vi" [checked]="tempLanguage() === 'vi'" class="sr-only pointer-events-none">
+                      @if (tempLanguage() === 'vi') {
+                        <div class="rounded-full border-slate-900 shrink-0"
+                             [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
+                             [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
+                             [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
+                             [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'" [class.border-[3px]]="tempUiMode() !== 'enhanced'"></div>
+                      } @else {
+                        <div class="rounded-full border border-slate-600 shrink-0 select-none"
+                             [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'"
+                             [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'"></div>
+                      }
+                    </div>
+
+                    <div (click)="setLanguage('en')" class="flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors"
+                        [class.bg-slate-800]="tempLanguage() === 'en'" [class.border-emerald-500]="tempUiMode() !== 'enhanced' && tempLanguage() === 'en'" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempLanguage() === 'en'"
+                        [class.bg-slate-850/40]="tempLanguage() !== 'en'" [class.border-slate-800/70]="tempLanguage() !== 'en'"
+                        [class.hover:border-slate-650]="tempLanguage() !== 'en'">
+                      <div>
+                        <div class="font-medium text-slate-200 select-none text-left"
+                             [class.text-base]="tempUiMode() === 'enhanced'"
+                             [class.text-sm]="tempUiMode() !== 'enhanced'">{{ lang.translations().LANG_EN }}</div>
+                      </div>
+                      <input type="radio" name="language" value="en" [checked]="tempLanguage() === 'en'" class="sr-only pointer-events-none">
+                      @if (tempLanguage() === 'en') {
+                        <div class="rounded-full border-slate-900 shrink-0"
+                             [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
+                             [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
+                             [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
+                             [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'" [class.border-[3px]]="tempUiMode() !== 'enhanced'"></div>
+                      } @else {
+                        <div class="rounded-full border border-slate-600 shrink-0 select-none"
+                             [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'"
+                             [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'"></div>
+                      }
+                    </div>
                   </div>
                 </div>
               </div>
@@ -379,14 +474,14 @@ import { MatIconModule } from '@angular/material/icon';
             <button (click)="resetSettings.emit()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer border border-slate-700/50"
                     [class.text-base]="tempUiMode() === 'enhanced'"
                     [class.text-sm]="tempUiMode() !== 'enhanced'">
-              Về mặc định
+              {{ lang.translations().SETTINGS_RESET }}
             </button>
             <button (click)="saveSettings.emit()" class="flex-1 text-white font-bold py-3 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
                     [class.bg-emerald-600]="tempUiMode() !== 'enhanced'" [class.hover:bg-emerald-500]="tempUiMode() !== 'enhanced'"
                     [class.bg-amber-600]="tempUiMode() === 'enhanced'" [class.hover:bg-amber-500]="tempUiMode() === 'enhanced'"
                     [class.text-base]="tempUiMode() === 'enhanced'"
                     [class.text-sm]="tempUiMode() !== 'enhanced'">
-              Lưu cài đặt
+              {{ lang.translations().SETTINGS_SAVE }}
             </button>
           </div>
         </div>
@@ -402,9 +497,12 @@ export class SettingsModal {
   tempFpsPreset = model<30 | 60>(30);
   tempShowBorder = model<boolean>(false);
   tempBorderColor = model<string>('#10b981');
+  tempLanguage = model<'vi' | 'en'>('vi');
 
   saveSettings = output<void>();
   resetSettings = output<void>();
+
+  lang = inject(LanguageService);
 
   borderColors = [
     { value: '#10b981', name: 'Xanh Lá' },
@@ -416,6 +514,21 @@ export class SettingsModal {
     { value: '#ffffff', name: 'Trắng Sáng' }
   ];
 
+  getTranslatedColorName(colorName: string): string {
+    const isEn = this.lang.currentLanguage() === 'en';
+    if (!isEn) return colorName;
+    switch (colorName) {
+      case 'Xanh Lá': return 'Green';
+      case 'Vàng': return 'Orange/Yellow';
+      case 'Xanh Dương': return 'Blue';
+      case 'Xanh Lam': return 'Sky Blue';
+      case 'Tím': return 'Purple';
+      case 'Hồng Đỏ': return 'Pink/Red';
+      case 'Trắng Sáng': return 'White';
+      default: return colorName;
+    }
+  }
+
   setQualityPreset(preset: 'high' | 'medium' | 'low') {
     this.tempQualityPreset.set(preset);
   }
@@ -426,6 +539,10 @@ export class SettingsModal {
 
   setFpsPreset(fps: 30 | 60) {
     this.tempFpsPreset.set(fps);
+  }
+
+  setLanguage(langCode: 'vi' | 'en') {
+    this.tempLanguage.set(langCode);
   }
 
   updateCameraSize(event: Event) {
