@@ -35,12 +35,17 @@ import { LanguageService } from './language.service';
           <div class="p-6 overflow-y-auto flex-1 custom-scrollbar">
             <div class="space-y-6">
               <!-- Privacy Note -->
-              <div class="p-4 rounded-xl bg-emerald-500/5 border border-emerald-505/10 flex gap-3 items-start"
-                   [class.bg-emerald-500/10]="uiMode() === 'enhanced'" [class.border-emerald-500/30]="uiMode() === 'enhanced'">
-                <mat-icon class="!text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.5)] shrink-0 mt-0.5 !text-[20px] !w-[20px] !h-[20px]"
+              <div class="p-4 rounded-xl border flex gap-3 items-start"
+                   [class.bg-teal-500/5]="uiMode() !== 'enhanced'" [class.border-teal-500/10]="uiMode() !== 'enhanced'"
+                   [class.bg-amber-500/10]="uiMode() === 'enhanced'" [class.border-amber-500/30]="uiMode() === 'enhanced'">
+                <mat-icon class="shrink-0 mt-0.5 !text-[20px] !w-[20px] !h-[20px]"
+                     [class.!text-teal-400]="uiMode() !== 'enhanced'" [class.drop-shadow-[0_0_8px_rgba(45,212,191,0.5)]]="uiMode() !== 'enhanced'"
+                     [class.!text-amber-400]="uiMode() === 'enhanced'" [class.drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]]="uiMode() === 'enhanced'"
                      [class.!text-[24px]]="uiMode() === 'enhanced'" [class.!w-[24px]]="uiMode() === 'enhanced'" [class.!h-[24px]]="uiMode() === 'enhanced'">verified_user</mat-icon>
                 <div class="space-y-1 text-left">
-                  <h4 class="font-bold text-emerald-400 uppercase tracking-wider"
+                  <h4 class="font-bold uppercase tracking-wider"
+                      [class.text-teal-400]="uiMode() !== 'enhanced'"
+                      [class.text-amber-400]="uiMode() === 'enhanced'"
                       [class.text-sm]="uiMode() === 'enhanced'"
                       [class.text-xs]="uiMode() !== 'enhanced'">{{ lang.translations().GUIDE_PRIVACY_TITLE }}</h4>
                   <p class="leading-relaxed font-sans"
@@ -56,7 +61,9 @@ import { LanguageService } from './language.service';
               <!-- Step 1 -->
               <div class="space-y-4">
                 <div class="flex items-center gap-3">
-                  <span class="flex items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold shrink-0"
+                  <span class="flex items-center justify-center rounded-full border font-semibold shrink-0"
+                        [class.bg-teal-500/10]="uiMode() !== 'enhanced'" [class.text-teal-400]="uiMode() !== 'enhanced'" [class.border-teal-500/20]="uiMode() !== 'enhanced'"
+                        [class.bg-amber-500/10]="uiMode() === 'enhanced'" [class.text-amber-400]="uiMode() === 'enhanced'" [class.border-amber-500/20]="uiMode() === 'enhanced'"
                         [class.w-9]="uiMode() === 'enhanced'" [class.h-9]="uiMode() === 'enhanced'" [class.text-base]="uiMode() === 'enhanced'"
                         [class.w-7]="uiMode() !== 'enhanced'" [class.h-7]="uiMode() !== 'enhanced'" [class.text-sm]="uiMode() !== 'enhanced'">1</span>
                   <h3 class="text-slate-300 font-medium text-left"
@@ -90,7 +97,9 @@ import { LanguageService } from './language.service';
               <!-- Step 2 -->
               <div class="space-y-4">
                 <div class="flex items-center gap-3">
-                  <span class="flex items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold shrink-0"
+                  <span class="flex items-center justify-center rounded-full border font-semibold shrink-0"
+                        [class.bg-teal-500/10]="uiMode() !== 'enhanced'" [class.text-teal-400]="uiMode() !== 'enhanced'" [class.border-teal-500/20]="uiMode() !== 'enhanced'"
+                        [class.bg-amber-500/10]="uiMode() === 'enhanced'" [class.text-amber-400]="uiMode() === 'enhanced'" [class.border-amber-500/20]="uiMode() === 'enhanced'"
                         [class.w-9]="uiMode() === 'enhanced'" [class.h-9]="uiMode() === 'enhanced'" [class.text-base]="uiMode() === 'enhanced'"
                         [class.w-7]="uiMode() !== 'enhanced'" [class.h-7]="uiMode() !== 'enhanced'" [class.text-sm]="uiMode() !== 'enhanced'">2</span>
                   <h3 class="text-slate-300 font-medium text-left"
@@ -114,7 +123,9 @@ import { LanguageService } from './language.service';
               <!-- Step 3 -->
               <div class="space-y-4">
                 <div class="flex items-center gap-3">
-                  <span class="flex items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold shrink-0"
+                  <span class="flex items-center justify-center rounded-full border font-semibold shrink-0"
+                        [class.bg-teal-500/10]="uiMode() !== 'enhanced'" [class.text-teal-400]="uiMode() !== 'enhanced'" [class.border-teal-500/20]="uiMode() !== 'enhanced'"
+                        [class.bg-amber-500/10]="uiMode() === 'enhanced'" [class.text-amber-400]="uiMode() === 'enhanced'" [class.border-amber-500/20]="uiMode() === 'enhanced'"
                         [class.w-9]="uiMode() === 'enhanced'" [class.h-9]="uiMode() === 'enhanced'" [class.text-base]="uiMode() === 'enhanced'"
                         [class.w-7]="uiMode() !== 'enhanced'" [class.h-7]="uiMode() !== 'enhanced'" [class.text-sm]="uiMode() !== 'enhanced'">3</span>
                   <h3 class="text-slate-300 font-medium text-left"
@@ -133,7 +144,9 @@ import { LanguageService } from './language.service';
               <!-- Step 4 -->
               <div class="space-y-4">
                 <div class="flex items-center gap-3">
-                  <span class="flex items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold shrink-0"
+                  <span class="flex items-center justify-center rounded-full border font-semibold shrink-0"
+                        [class.bg-teal-500/10]="uiMode() !== 'enhanced'" [class.text-teal-400]="uiMode() !== 'enhanced'" [class.border-teal-500/20]="uiMode() !== 'enhanced'"
+                        [class.bg-amber-500/10]="uiMode() === 'enhanced'" [class.text-amber-400]="uiMode() === 'enhanced'" [class.border-amber-500/20]="uiMode() === 'enhanced'"
                         [class.w-9]="uiMode() === 'enhanced'" [class.h-9]="uiMode() === 'enhanced'" [class.text-base]="uiMode() === 'enhanced'"
                         [class.w-7]="uiMode() !== 'enhanced'" [class.h-7]="uiMode() !== 'enhanced'" [class.text-sm]="uiMode() !== 'enhanced'">4</span>
                   <h3 class="text-slate-300 font-medium text-left"

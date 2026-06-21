@@ -16,7 +16,7 @@ import { LanguageService } from './language.service';
          [class.bg-slate-900]="uiMode() === 'enhanced'"
          [class.hover:bg-slate-800]="uiMode() === 'enhanced'"
          [class.border-slate-700/50]="!isCameraEnabled()"
-         [class.border-emerald-500/30]="uiMode() !== 'enhanced' && isCameraEnabled()"
+         [class.border-teal-500/30]="uiMode() !== 'enhanced' && isCameraEnabled()"
          [class.border-amber-500/50]="uiMode() === 'enhanced' && isCameraEnabled()"
          [class.opacity-40]="cameraError() !== null"
          [attr.title]="cameraError()"
@@ -25,8 +25,8 @@ import { LanguageService } from './language.service';
             <!-- Status Dot -->
             <div class="relative flex" [class.h-2]="uiMode() !== 'enhanced'" [class.w-2]="uiMode() !== 'enhanced'" [class.h-3]="uiMode() === 'enhanced'" [class.w-3]="uiMode() === 'enhanced'">
               @if (isCameraEnabled()) {
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" [class.bg-emerald-400]="uiMode() !== 'enhanced'" [class.bg-amber-400]="uiMode() === 'enhanced'"></span>
-                <span class="relative inline-flex rounded-full h-full w-full" [class.bg-emerald-500]="uiMode() !== 'enhanced'" [class.bg-amber-500]="uiMode() === 'enhanced'"></span>
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" [class.bg-teal-400]="uiMode() !== 'enhanced'" [class.bg-amber-400]="uiMode() === 'enhanced'"></span>
+                <span class="relative inline-flex rounded-full h-full w-full" [class.bg-teal-500]="uiMode() !== 'enhanced'" [class.bg-amber-500]="uiMode() === 'enhanced'"></span>
               } @else {
                 <span class="relative inline-flex rounded-full h-full w-full bg-slate-600"></span>
               }
@@ -38,7 +38,7 @@ import { LanguageService } from './language.service';
                [class.font-medium]="uiMode() !== 'enhanced'"
                [class.text-sm]="uiMode() === 'enhanced'" 
                [class.font-bold]="uiMode() === 'enhanced'" 
-               [class.text-emerald-400]="uiMode() !== 'enhanced' && isCameraEnabled()" 
+               [class.text-teal-400]="uiMode() !== 'enhanced' && isCameraEnabled()" 
                [class.text-amber-400]="uiMode() === 'enhanced' && isCameraEnabled()" 
                [class.text-slate-400]="uiMode() !== 'enhanced' && !isCameraEnabled()"
                [class.text-slate-300]="uiMode() === 'enhanced' && !isCameraEnabled()"
@@ -56,7 +56,7 @@ import { LanguageService } from './language.service';
           class="relative inline-flex items-center rounded-full transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer p-[2px]"
           [class.h-5]="uiMode() !== 'enhanced'" [class.w-9]="uiMode() !== 'enhanced'"
           [class.h-6]="uiMode() === 'enhanced'" [class.w-11]="uiMode() === 'enhanced'"
-          [class.bg-emerald-500/80]="uiMode() !== 'enhanced' && isCameraEnabled()"
+          [class.bg-teal-500/80]="uiMode() !== 'enhanced' && isCameraEnabled()"
           [class.bg-amber-500]="uiMode() === 'enhanced' && isCameraEnabled()"
           [class.bg-slate-700]="!isCameraEnabled()"
         >

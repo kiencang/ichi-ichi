@@ -1,5 +1,5 @@
 export const APP_CONFIG = {
-  VERSION: 'v1.0.38',
+  VERSION: 'v1.0.39',
   LOCAL_STORAGE_KEYS: {
     QUALITY_PRESET: 'ichi_qualityPreset',
     CAMERA_SIZE: 'ichi_cameraSize',
@@ -15,7 +15,7 @@ export const APP_CONFIG = {
     UI_MODE: 'default' as const,
     FPS_PRESET: 30 as const,
     SHOW_BORDER: false,
-    BORDER_COLOR_DEFAULT: '#10b981',
+    BORDER_COLOR_DEFAULT: '#14b8a6',
     BORDER_COLOR_ENHANCED: '#f59e0b',
     LANGUAGE: 'vi' as const,
   },

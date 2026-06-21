@@ -43,14 +43,14 @@ import { LanguageService } from './language.service';
                       [class.text-base]="tempUiMode() === 'enhanced'" [class.font-semibold]="tempUiMode() === 'enhanced'"
                       [class.text-sm]="tempUiMode() !== 'enhanced'">
                     <span class="w-1.5 h-1.5 rounded-full animate-[pulse_2s_infinite]"
-                          [class.bg-emerald-500]="tempUiMode() !== 'enhanced'"
+                          [class.bg-teal-500]="tempUiMode() !== 'enhanced'"
                           [class.bg-amber-500]="tempUiMode() === 'enhanced'"></span>
                     {{ lang.translations().COL_QUALITY_TITLE }}
                   </h3>
                   
                   <div class="space-y-3">
                     <div (click)="setQualityPreset('high')" class="flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors"
-                        [class.bg-slate-800]="tempQualityPreset() === 'high'" [class.border-emerald-500]="tempUiMode() !== 'enhanced' && tempQualityPreset() === 'high'" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempQualityPreset() === 'high'"
+                        [class.bg-slate-800]="tempQualityPreset() === 'high'" [class.border-teal-500]="tempUiMode() !== 'enhanced' && tempQualityPreset() === 'high'" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempQualityPreset() === 'high'"
                         [class.bg-slate-850/40]="tempQualityPreset() !== 'high'" [class.border-slate-800/70]="tempQualityPreset() !== 'high'"
                         [class.hover:border-slate-700]="tempQualityPreset() !== 'high'">
                       <div>
@@ -67,7 +67,7 @@ import { LanguageService } from './language.service';
                       <input type="radio" name="quality" value="high" [checked]="tempQualityPreset() === 'high'" class="sr-only pointer-events-none">
                       @if (tempQualityPreset() === 'high') {
                         <div class="rounded-full border-slate-900 shrink-0"
-                             [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
+                             [class.bg-teal-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(20,184,166,1)]]="tempUiMode() !== 'enhanced'"
                              [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
                              [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
                              [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'" [class.border-[3px]]="tempUiMode() !== 'enhanced'"></div>
@@ -79,7 +79,7 @@ import { LanguageService } from './language.service';
                     </div>
 
                     <div (click)="setQualityPreset('medium')" class="flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors"
-                        [class.bg-slate-800]="tempQualityPreset() === 'medium'" [class.border-emerald-500]="tempUiMode() !== 'enhanced' && tempQualityPreset() === 'medium'" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempQualityPreset() === 'medium'"
+                        [class.bg-slate-800]="tempQualityPreset() === 'medium'" [class.border-teal-500]="tempUiMode() !== 'enhanced' && tempQualityPreset() === 'medium'" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempQualityPreset() === 'medium'"
                         [class.bg-slate-850/40]="tempQualityPreset() !== 'medium'" [class.border-slate-800/70]="tempQualityPreset() !== 'medium'"
                         [class.hover:border-slate-700]="tempQualityPreset() !== 'medium'">
                       <div>
@@ -96,7 +96,7 @@ import { LanguageService } from './language.service';
                       <input type="radio" name="quality" value="medium" [checked]="tempQualityPreset() === 'medium'" class="sr-only pointer-events-none">
                       @if (tempQualityPreset() === 'medium') {
                         <div class="rounded-full border-slate-900 shrink-0"
-                             [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
+                             [class.bg-teal-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(20,184,166,1)]]="tempUiMode() !== 'enhanced'"
                              [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
                              [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
                              [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'" [class.border-[3px]]="tempUiMode() !== 'enhanced'"></div>
@@ -108,7 +108,7 @@ import { LanguageService } from './language.service';
                     </div>
 
                     <div (click)="setQualityPreset('low')" class="flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors"
-                        [class.bg-slate-800]="tempQualityPreset() === 'low'" [class.border-emerald-500]="tempUiMode() !== 'enhanced' && tempQualityPreset() === 'low'" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempQualityPreset() === 'low'"
+                        [class.bg-slate-800]="tempQualityPreset() === 'low'" [class.border-teal-500]="tempUiMode() !== 'enhanced' && tempQualityPreset() === 'low'" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempQualityPreset() === 'low'"
                         [class.bg-slate-850/40]="tempQualityPreset() !== 'low'" [class.border-slate-800/70]="tempQualityPreset() !== 'low'"
                         [class.hover:border-slate-700]="tempQualityPreset() !== 'low'">
                       <div>
@@ -125,7 +125,7 @@ import { LanguageService } from './language.service';
                       <input type="radio" name="quality" value="low" [checked]="tempQualityPreset() === 'low'" class="sr-only pointer-events-none">
                       @if (tempQualityPreset() === 'low') {
                         <div class="rounded-full border-slate-900 shrink-0"
-                             [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
+                             [class.bg-teal-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(20,184,166,1)]]="tempUiMode() !== 'enhanced'"
                              [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
                              [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
                              [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'" [class.border-[3px]]="tempUiMode() !== 'enhanced'"></div>
@@ -138,7 +138,7 @@ import { LanguageService } from './language.service';
                   </div>
 
                   <!-- Dynamic Helper Info box based on selected Quality -->
-                  <div class="p-3 bg-slate-900/50 rounded-lg text-[#34d399] border border-emerald-500/10 text-left select-none"
+                  <div class="p-3 bg-slate-900/50 rounded-lg text-[#2dd4bf] border border-teal-500/10 text-left select-none"
                        [class.text-[#f59e0b]]="tempUiMode() === 'enhanced'" [class.border-amber-500/20]="tempUiMode() === 'enhanced'">
                     <p class="font-medium flex items-start gap-1 w-full leading-normal"
                        [class.text-sm]="tempUiMode() === 'enhanced'"
@@ -167,14 +167,14 @@ import { LanguageService } from './language.service';
                       [class.text-base]="tempUiMode() === 'enhanced'" [class.font-semibold]="tempUiMode() === 'enhanced'"
                       [class.text-sm]="tempUiMode() !== 'enhanced'">
                     <span class="w-1.5 h-1.5 rounded-full animate-[pulse_2s_infinite]"
-                          [class.bg-emerald-500]="tempUiMode() !== 'enhanced'"
+                          [class.bg-teal-500]="tempUiMode() !== 'enhanced'"
                           [class.bg-amber-500]="tempUiMode() === 'enhanced'"></span>
                     {{ lang.translations().COL_FPS_TITLE }}
                   </h3>
                   
                   <div class="grid grid-cols-2 gap-3">
                     <div (click)="setFpsPreset(30)" class="group relative flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors"
-                        [class.bg-slate-800]="tempFpsPreset() === 30" [class.border-emerald-500]="tempUiMode() !== 'enhanced' && tempFpsPreset() === 30" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempFpsPreset() === 30"
+                        [class.bg-slate-800]="tempFpsPreset() === 30" [class.border-teal-500]="tempUiMode() !== 'enhanced' && tempFpsPreset() === 30" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempFpsPreset() === 30"
                         [class.bg-slate-850/40]="tempFpsPreset() !== 30" [class.border-slate-800/70]="tempFpsPreset() !== 30"
                         [class.hover:border-slate-600]="tempFpsPreset() !== 30">
                       
@@ -192,7 +192,7 @@ import { LanguageService } from './language.service';
                       <input type="radio" name="fpsPreset" value="30" [checked]="tempFpsPreset() === 30" class="sr-only pointer-events-none">
                       @if (tempFpsPreset() === 30) {
                         <div class="rounded-full border-slate-900 shrink-0 select-none"
-                             [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
+                             [class.bg-teal-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(20,184,166,1)]]="tempUiMode() !== 'enhanced'"
                              [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
                              [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
                              [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'" [class.border-[3px]]="tempUiMode() !== 'enhanced'"></div>
@@ -204,7 +204,7 @@ import { LanguageService } from './language.service';
                     </div>
 
                     <div (click)="setFpsPreset(60)" class="group relative flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors"
-                        [class.bg-slate-800]="tempFpsPreset() === 60" [class.border-emerald-500]="tempUiMode() !== 'enhanced' && tempFpsPreset() === 60" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempFpsPreset() === 60"
+                        [class.bg-slate-800]="tempFpsPreset() === 60" [class.border-teal-500]="tempUiMode() !== 'enhanced' && tempFpsPreset() === 60" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempFpsPreset() === 60"
                         [class.bg-slate-850/40]="tempFpsPreset() !== 60" [class.border-slate-800/70]="tempFpsPreset() !== 60"
                         [class.hover:border-slate-600]="tempFpsPreset() !== 60">
                       
@@ -222,7 +222,7 @@ import { LanguageService } from './language.service';
                       <input type="radio" name="fpsPreset" value="60" [checked]="tempFpsPreset() === 60" class="sr-only pointer-events-none">
                       @if (tempFpsPreset() === 60) {
                         <div class="rounded-full border-slate-900 shrink-0 select-none"
-                             [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
+                             [class.bg-teal-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(20,184,166,1)]]="tempUiMode() !== 'enhanced'"
                              [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
                              [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
                              [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'" [class.border-[3px]]="tempUiMode() !== 'enhanced'"></div>
@@ -241,7 +241,7 @@ import { LanguageService } from './language.service';
                       [class.text-base]="tempUiMode() === 'enhanced'" [class.font-semibold]="tempUiMode() === 'enhanced'"
                       [class.text-sm]="tempUiMode() !== 'enhanced'">
                     <span class="w-1.5 h-1.5 rounded-full animate-[pulse_2s_infinite]"
-                          [class.bg-emerald-500]="tempUiMode() !== 'enhanced'"
+                          [class.bg-teal-500]="tempUiMode() !== 'enhanced'"
                           [class.bg-amber-500]="tempUiMode() === 'enhanced'"></span>
                     {{ lang.translations().COL_BORDER_TITLE }}
                   </h3>
@@ -251,8 +251,8 @@ import { LanguageService } from './language.service';
                     <input 
                       type="checkbox" 
                       [checked]="tempShowBorder()" 
-                      class="w-4 h-4 rounded text-emerald-500 border-slate-700 bg-slate-800 focus:ring-emerald-500 pointer-events-none"
-                      [class.text-emerald-500]="tempUiMode() !== 'enhanced' && tempShowBorder()"
+                      class="w-4 h-4 rounded text-teal-500 border-slate-700 bg-slate-800 focus:ring-teal-500 pointer-events-none"
+                      [class.text-teal-500]="tempUiMode() !== 'enhanced' && tempShowBorder()"
                       [class.text-amber-500]="tempUiMode() === 'enhanced' && tempShowBorder()"
                     >
                     <span class="font-medium animate-none text-left leading-normal"
@@ -280,7 +280,7 @@ import { LanguageService } from './language.service';
                               [class.ring-2]="tempBorderColor() === color.value"
                               [class.ring-offset-2]="tempBorderColor() === color.value"
                               [class.ring-offset-slate-900]="tempBorderColor() === color.value"
-                              [class.ring-emerald-500]="tempUiMode() !== 'enhanced' && tempBorderColor() === color.value"
+                              [class.ring-teal-500]="tempUiMode() !== 'enhanced' && tempBorderColor() === color.value"
                               [class.ring-amber-500]="tempUiMode() === 'enhanced' && tempBorderColor() === color.value"
                             >
                               @if (tempBorderColor() === color.value) {
@@ -307,13 +307,13 @@ import { LanguageService } from './language.service';
                       [class.text-base]="tempUiMode() === 'enhanced'" [class.font-semibold]="tempUiMode() === 'enhanced'"
                       [class.text-sm]="tempUiMode() !== 'enhanced'">
                     <span class="w-1.5 h-1.5 rounded-full animate-[pulse_2s_infinite]"
-                          [class.bg-emerald-500]="tempUiMode() !== 'enhanced'"
+                          [class.bg-teal-500]="tempUiMode() !== 'enhanced'"
                           [class.bg-amber-500]="tempUiMode() === 'enhanced'"></span>
                     {{ lang.translations().COL_UI_TITLE }}
                   </h3>
                   <div class="grid grid-cols-2 gap-3">
                     <div (click)="setUiMode('default')" class="flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors"
-                        [class.bg-slate-800]="tempUiMode() === 'default'" [class.border-emerald-500]="tempUiMode() === 'default'"
+                        [class.bg-slate-800]="tempUiMode() === 'default'" [class.border-teal-500]="tempUiMode() === 'default'"
                         [class.bg-slate-850/40]="tempUiMode() !== 'default'" [class.border-slate-800/70]="tempUiMode() !== 'default'"
                         [class.hover:border-slate-600]="tempUiMode() !== 'default'">
                       <div>
@@ -324,7 +324,7 @@ import { LanguageService } from './language.service';
                       <input type="radio" name="uiMode" value="default" [checked]="tempUiMode() === 'default'" class="sr-only pointer-events-none">
                       @if (tempUiMode() === 'default') {
                         <div class="rounded-full border-slate-900"
-                             [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
+                             [class.bg-teal-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(20,184,166,1)]]="tempUiMode() !== 'enhanced'"
                              [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
                              [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
                              [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'" [class.border-[3px]]="tempUiMode() !== 'enhanced'"></div>
@@ -356,7 +356,7 @@ import { LanguageService } from './language.service';
                       <input type="radio" name="uiMode" value="enhanced" [checked]="tempUiMode() === 'enhanced'" class="sr-only pointer-events-none">
                       @if (tempUiMode() === 'enhanced') {
                         <div class="rounded-full border-slate-900 shrink-0"
-                             [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
+                             [class.bg-teal-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(20,184,166,1)]]="tempUiMode() !== 'enhanced'"
                              [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
                              [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
                              [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'" [class.border-[3px]]="tempUiMode() !== 'enhanced'"></div>
@@ -376,12 +376,12 @@ import { LanguageService } from './language.service';
                       [class.text-sm]="tempUiMode() !== 'enhanced'">
                     <div class="flex items-center gap-2">
                       <span class="w-1.5 h-1.5 rounded-full animate-[pulse_2s_infinite]"
-                            [class.bg-emerald-500]="tempUiMode() !== 'enhanced'"
+                            [class.bg-teal-500]="tempUiMode() !== 'enhanced'"
                             [class.bg-amber-500]="tempUiMode() === 'enhanced'"></span>
                       {{ lang.translations().COL_WEBCAM_SIZE_TITLE }}
                     </div>
                     <span class="font-mono font-bold text-xs px-2 py-0.5 rounded-md bg-slate-900 border border-slate-800 shadow-sm animate-none"
-                         [class.text-emerald-400]="tempUiMode() !== 'enhanced'"
+                         [class.text-teal-400]="tempUiMode() !== 'enhanced'"
                          [class.text-amber-400]="tempUiMode() === 'enhanced'"
                          [class.text-sm]="tempUiMode() === 'enhanced'">{{ tempCameraSize() }}px</span>
                   </h3>
@@ -397,7 +397,7 @@ import { LanguageService } from './language.service';
                        [value]="tempCameraSize()" 
                        (input)="updateCameraSize($event)"
                        class="flex-1 h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2"
-                       [class.accent-emerald-500]="tempUiMode() !== 'enhanced'" [class.focus:ring-emerald-500/50]="tempUiMode() !== 'enhanced'"
+                       [class.accent-teal-500]="tempUiMode() !== 'enhanced'" [class.focus:ring-teal-500/50]="tempUiMode() !== 'enhanced'"
                        [class.accent-amber-500]="tempUiMode() === 'enhanced'" [class.focus:ring-amber-500/50]="tempUiMode() === 'enhanced'"
                     >
                     <span class="font-mono w-12 text-right text-slate-400 select-none"
@@ -412,13 +412,13 @@ import { LanguageService } from './language.service';
                       [class.text-base]="tempUiMode() === 'enhanced'" [class.font-semibold]="tempUiMode() === 'enhanced'"
                       [class.text-sm]="tempUiMode() !== 'enhanced'">
                     <span class="w-1.5 h-1.5 rounded-full animate-[pulse_2s_infinite]"
-                          [class.bg-emerald-500]="tempUiMode() !== 'enhanced'"
+                          [class.bg-teal-500]="tempUiMode() !== 'enhanced'"
                           [class.bg-amber-500]="tempUiMode() === 'enhanced'"></span>
                     {{ lang.translations().COL_LANG_TITLE }}
                   </h3>
                   <div class="grid grid-cols-2 gap-3">
                     <div (click)="setLanguage('vi')" class="flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors"
-                        [class.bg-slate-800]="tempLanguage() === 'vi'" [class.border-emerald-500]="tempUiMode() !== 'enhanced' && tempLanguage() === 'vi'" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempLanguage() === 'vi'"
+                        [class.bg-slate-800]="tempLanguage() === 'vi'" [class.border-teal-500]="tempUiMode() !== 'enhanced' && tempLanguage() === 'vi'" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempLanguage() === 'vi'"
                         [class.bg-slate-850/40]="tempLanguage() !== 'vi'" [class.border-slate-800/70]="tempLanguage() !== 'vi'"
                         [class.hover:border-slate-650]="tempLanguage() !== 'vi'">
                       <div>
@@ -429,7 +429,7 @@ import { LanguageService } from './language.service';
                       <input type="radio" name="language" value="vi" [checked]="tempLanguage() === 'vi'" class="sr-only pointer-events-none">
                       @if (tempLanguage() === 'vi') {
                         <div class="rounded-full border-slate-900 shrink-0"
-                             [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
+                             [class.bg-teal-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(20,184,166,1)]]="tempUiMode() !== 'enhanced'"
                              [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
                              [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
                              [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'" [class.border-[3px]]="tempUiMode() !== 'enhanced'"></div>
@@ -441,7 +441,7 @@ import { LanguageService } from './language.service';
                     </div>
 
                     <div (click)="setLanguage('en')" class="flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors"
-                        [class.bg-slate-800]="tempLanguage() === 'en'" [class.border-emerald-500]="tempUiMode() !== 'enhanced' && tempLanguage() === 'en'" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempLanguage() === 'en'"
+                        [class.bg-slate-800]="tempLanguage() === 'en'" [class.border-teal-500]="tempUiMode() !== 'enhanced' && tempLanguage() === 'en'" [class.border-amber-500]="tempUiMode() === 'enhanced' && tempLanguage() === 'en'"
                         [class.bg-slate-850/40]="tempLanguage() !== 'en'" [class.border-slate-800/70]="tempLanguage() !== 'en'"
                         [class.hover:border-slate-650]="tempLanguage() !== 'en'">
                       <div>
@@ -452,7 +452,7 @@ import { LanguageService } from './language.service';
                       <input type="radio" name="language" value="en" [checked]="tempLanguage() === 'en'" class="sr-only pointer-events-none">
                       @if (tempLanguage() === 'en') {
                         <div class="rounded-full border-slate-900 shrink-0"
-                             [class.bg-emerald-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(16,185,129,1)]]="tempUiMode() !== 'enhanced'"
+                             [class.bg-teal-500]="tempUiMode() !== 'enhanced'" [class.shadow-[0_0_0_1px_rgba(20,184,166,1)]]="tempUiMode() !== 'enhanced'"
                              [class.bg-amber-500]="tempUiMode() === 'enhanced'" [class.shadow-[0_0_0_1px_rgba(245,158,11,1)]]="tempUiMode() === 'enhanced'"
                              [class.w-5]="tempUiMode() === 'enhanced'" [class.h-5]="tempUiMode() === 'enhanced'" [class.border-[4px]]="tempUiMode() === 'enhanced'"
                              [class.w-4]="tempUiMode() !== 'enhanced'" [class.h-4]="tempUiMode() !== 'enhanced'" [class.border-[3px]]="tempUiMode() !== 'enhanced'"></div>
@@ -477,7 +477,7 @@ import { LanguageService } from './language.service';
               {{ lang.translations().SETTINGS_RESET }}
             </button>
             <button (click)="saveSettings.emit()" class="flex-1 text-white font-bold py-3 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
-                    [class.bg-emerald-600]="tempUiMode() !== 'enhanced'" [class.hover:bg-emerald-500]="tempUiMode() !== 'enhanced'"
+                    [class.bg-teal-600]="tempUiMode() !== 'enhanced'" [class.hover:bg-teal-500]="tempUiMode() !== 'enhanced'"
                     [class.bg-amber-600]="tempUiMode() === 'enhanced'" [class.hover:bg-amber-500]="tempUiMode() === 'enhanced'"
                     [class.text-base]="tempUiMode() === 'enhanced'"
                     [class.text-sm]="tempUiMode() !== 'enhanced'">
@@ -496,7 +496,7 @@ export class SettingsModal {
   tempUiMode = model<'default' | 'enhanced'>('default');
   tempFpsPreset = model<30 | 60>(30);
   tempShowBorder = model<boolean>(false);
-  tempBorderColor = model<string>('#10b981');
+  tempBorderColor = model<string>('#14b8a6');
   tempLanguage = model<'vi' | 'en'>('vi');
 
   saveSettings = output<void>();
@@ -505,7 +505,7 @@ export class SettingsModal {
   lang = inject(LanguageService);
 
   borderColors = [
-    { value: '#10b981', name: 'Xanh Lá' },
+    { value: '#14b8a6', name: 'Xanh Mòng Két' },
     { value: '#f59e0b', name: 'Vàng' },
     { value: '#3b82f6', name: 'Xanh Dương' },
     { value: '#0ea5e9', name: 'Xanh Lam' },
@@ -518,7 +518,7 @@ export class SettingsModal {
     const isEn = this.lang.currentLanguage() === 'en';
     if (!isEn) return colorName;
     switch (colorName) {
-      case 'Xanh Lá': return 'Green';
+      case 'Xanh Mòng Két': return 'Teal';
       case 'Vàng': return 'Orange/Yellow';
       case 'Xanh Dương': return 'Blue';
       case 'Xanh Lam': return 'Sky Blue';
